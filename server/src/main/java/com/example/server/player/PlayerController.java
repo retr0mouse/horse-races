@@ -29,4 +29,21 @@ public class PlayerController {
     public void addPlayer(@RequestBody Player player) {
         playerService.addPlayer(player);
     }
+
+    @DeleteMapping(path = "{id}")
+    public void deletePlayer(@PathVariable("id") Long id) {
+        playerService.deletePlayer(id);
+    }
+
+    @PutMapping(path = "{id}")
+    public void updatePlayer(@PathVariable("id") Long id,
+                             @RequestParam(required = false) String username,
+                             @RequestParam(required = false) String firstname,
+                             @RequestParam(required = false) String lastname,
+                             @RequestParam(required = false) String email,
+                             @RequestParam(required = false) String password,
+                             @RequestParam(required = false) Double balance,
+                             @RequestParam(required = false) Integer winnings) {
+        playerService.updatePlayer(id, username, firstname, lastname, email, password, balance, winnings);
+    }
 }
