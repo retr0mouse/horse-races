@@ -17,8 +17,7 @@ export class PlayerAPI {
             }
         });
         if (!response.ok) {
-            const data = await response.json();
-            throw new Error(data.message);
+            throw new Error("Request failed with status code " + response.status);
         }
     }
 }

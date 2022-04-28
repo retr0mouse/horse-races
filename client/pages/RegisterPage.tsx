@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RegisterInput } from "../components/RegisterInput";
 import styled from "styled-components";
 import { PlayerAPI } from "../apis/PlayerAPI";
+import { Message } from "../components/Message";
 
 let RegisterContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-self: center;
+    width: 200px;
+
+    h1 {
+        align-self: center;
+    }
+
+    .input-container {
+        align-self: baseline;
+    }
+
+    input {
+        margin: 10px 10px 5px 0;
+    }
 `;
 
 export function RegisterPage() {
@@ -17,6 +31,17 @@ export function RegisterPage() {
     const [password, setPassword] = useState() as any;
     const [balance, setBalance] = useState() as any;
     const [winnings, setWinnings] = useState() as any;
+    const [notice, setNotice] = useState("") as any;
+    
+    useEffect(() => {
+        if (!notice) {
+            return;
+        }
+        const timeout = setTimeout(() => setNotice(""), 5000);
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [notice])
 
     return (
         <RegisterContainer>
@@ -31,10 +56,23 @@ export function RegisterPage() {
                 onWinningsTyped={(event) => setWinnings(event?.target.value)}
                 onClicked= {() => registerPlayer()}
             ></RegisterInput>
+            <Message 
+                message={notice}
+            ></Message>
         </RegisterContainer>
     );
 
     async function registerPlayer() {
-        console.log(await PlayerAPI.registerPlayer(username, firstname, lastname, email, password, balance, winnings));
+        if (username != '' && firstname != '' && lastname != '' && email != '' && password != '' && balance != '' && winnings != '') {
+            try {
+                await PlayerAPI.registerPlayer(username, firstname, lastname, email, password, balance, winnings);
+            } catch (error) {
+                console.log(error);
+                setNotice("something went wrong:" + error);
+                return;
+            }
+            setNotice("👍");    
+        }
+        return;      
     }
 }
