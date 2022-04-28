@@ -3,6 +3,7 @@ import { RegisterInput } from "../components/RegisterInput";
 import styled from "styled-components";
 import { PlayerAPI } from "../apis/PlayerAPI";
 import { Message } from "../components/Message";
+import { UserSummary } from "../components/UserSummary";
 
 let RegisterContainer = styled.div`
     display: flex;
@@ -56,6 +57,7 @@ export function RegisterPage() {
                 onWinningsTyped={(event) => setWinnings(event?.target.value)}
                 onClicked= {() => registerPlayer()}
             ></RegisterInput>
+            <UserSummary/>
             <Message 
                 message={notice}
             ></Message>
@@ -68,7 +70,7 @@ export function RegisterPage() {
                 await PlayerAPI.registerPlayer(username, firstname, lastname, email, password, balance, winnings);
             } catch (error) {
                 console.log(error);
-                setNotice("something went wrong:" + error);
+                setNotice("something went wrong: " + error);
                 return;
             }
             setNotice("👍");    

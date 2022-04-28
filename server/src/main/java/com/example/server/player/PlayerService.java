@@ -26,6 +26,13 @@ public class PlayerService {
                 ));
     }
 
+    public Player getPlayerByUsernameAndPassword(String username, String password) {
+        return playerRepository.findPlayerByUsernameAndPassword(username, password)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Credentials are wrong"
+                ));
+    }
+
     public void addPlayer(Player player) {
         var playerOptional = playerRepository.findPlayerByUsername(player.getUsername());
         if (playerOptional.isPresent()) {

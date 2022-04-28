@@ -1,6 +1,7 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { UserSummary } from "./UserSummary";
 
 let activeClassName = "current"
 
@@ -30,7 +31,7 @@ const UnorderedList = styled.ul`
     margin-bottom: 20px;
 `;
 
-export function Navigation() {
+export function Navigation(): ReactElement {
     return (
         <nav>
             <UnorderedList>
@@ -60,6 +61,9 @@ export function Navigation() {
                         to="/registration">
                         Registration page
                     </NavLink>
+                </ListItem>
+                <ListItem>
+                    <UserSummary/>
                 </ListItem>
             </UnorderedList>
         </nav>

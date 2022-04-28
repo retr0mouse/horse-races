@@ -1,5 +1,7 @@
 package com.example.server.player;
 
+import com.example.server.token.Generator;
+import com.example.server.token.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,15 @@ public class PlayerController {
     @GetMapping(value = "get", params = "id")
     public Player getPlayerById(@RequestParam Long id) {
         return playerService.getPlayerById(id);
+    }
+
+    @GetMapping(value = "get", params = {"username", "password"})
+    public Token getPlayerByUsernameAndPassword(@RequestParam String username, @RequestParam String password) {
+        var player = playerService.getPlayerByUsernameAndPassword(username, password);
+        if (player != null) {
+            return Generator.generateToken(10, player.getId());
+        }
+        throw new IllegalStateException("Credentials are wrong");
     }
 
     @PostMapping("add")

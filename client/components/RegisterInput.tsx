@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import styled from "styled-components";
 
 
@@ -14,7 +14,7 @@ interface Props {
     onClicked(query: any): void;
 }
 
-export function RegisterInput(props: Props) {
+export function RegisterInput(props: Props): ReactElement {
     const [usernameMessage, setUsernameMessage] = useState("") as any;
     const [lastnameMessage, setLastnameMessage] = useState("") as any;
     const [firstnameMessage, setFirstnameMessage] = useState("") as any;
