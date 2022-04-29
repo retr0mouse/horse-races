@@ -1,7 +1,6 @@
 package com.example.server.player;
 
 import com.example.server.token.Generator;
-import com.example.server.token.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,19 +26,31 @@ public class PlayerController {
         return playerService.getPlayerById(id);
     }
 
-    @GetMapping(value = "get", params = {"username", "password"})
-    public Token getPlayerByUsernameAndPassword(@RequestParam String username, @RequestParam String password) {
-        var player = playerService.getPlayerByUsernameAndPassword(username, password);
-        if (player != null) {
-            return Generator.generateToken(10, player.getId());
-        }
-        throw new IllegalStateException("Credentials are wrong");
-    }
+//    @GetMapping(value = "get", params = {"username", "password"})
+//    public Token getPlayerByUsernameAndPassword(@RequestParam String username, @RequestParam String password) {
+//        var player = playerService.getPlayerByUsernameAndPassword(username, password);
+//        if (player != null) {
+//            return Generator.generateToken(10, player.getId());
+//        }
+//        throw new IllegalStateException("Credentials are wrong");
+//    }
+//
+//    @PostMapping("login")
+//    public Player login(@RequestParam("username") String username, @RequestParam("password") String password) {
+//        var player = playerService.getPlayerByUsernameAndPassword(username, password);
+//        if (player != null) {
+//            String token = Generator.generateToken(username);
+//        }
+//        else {
+//            throw new IllegalStateException("Credentials are wrong");
+//        }
+//        return player;
+//    }
 
-    @PostMapping("add")
-    public void addPlayer(@RequestBody Player player) {
-        playerService.addPlayer(player);
-    }
+//    @PostMapping("add")
+//    public void addPlayer(@RequestBody Player player) {
+//        playerService.addPlayer(player);
+//    }
 
     @DeleteMapping(path = "{id}")
     public void deletePlayer(@PathVariable("id") Long id) {

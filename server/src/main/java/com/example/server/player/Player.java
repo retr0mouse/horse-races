@@ -1,10 +1,18 @@
 package com.example.server.player;
 
+import com.example.server.role.Role;
+
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity (name = "Player")
-@Table (name = "player")
+@Table (
+        name = "player",
+        uniqueConstraints = {
+                @UniqueConstraint(name="username_unique", columnNames = "username"),
+                @UniqueConstraint(name="email_unique", columnNames = "email")
+        })
 public class Player {
     @Id
     @SequenceGenerator (
@@ -63,6 +71,15 @@ public class Player {
             name = "winnings"
     )
     private int winnings;
+
+    @ManyToMany (fetch = FetchType.LAZY)
+    @JoinTable (
+            name = "player_to_role",
+            joinColumns = @JoinColumn(name = "player_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id",
+            foreignKey = @ForeignKey(name = "player_id_fk"))
+    )
+    private Set<Role> roles = new HashSet<>();
 
     public Player() {
     }
@@ -149,5 +166,13 @@ public class Player {
 
     public void setWinnings(int winnings) {
         this.winnings = winnings;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
