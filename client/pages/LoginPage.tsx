@@ -31,9 +31,7 @@ export function LoginPage() {
         if (username != '' && password != '') {
             try {
                 const token = await PlayerAPI.loginPlayer(username, password);
-                window.sessionStorage.setItem("token", token.id);
-                window.sessionStorage.setItem("player_id", token.playerId.toString());
-                console.log(token);
+                window.sessionStorage.setItem("token", token);
             } catch (error) {
                 setNotice("something went wrong: " + error)
                 return;

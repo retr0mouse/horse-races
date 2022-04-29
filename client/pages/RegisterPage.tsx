@@ -69,7 +69,6 @@ export function RegisterPage() {
             try {
                 await PlayerAPI.registerPlayer(username, firstname, lastname, email, password, balance, winnings);
             } catch (error) {
-                console.log(error);
                 setNotice("something went wrong: " + error);
                 return;
             }
