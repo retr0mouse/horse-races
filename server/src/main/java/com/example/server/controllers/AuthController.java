@@ -78,6 +78,7 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already in use"));
         }
 
+        // create new user's account
         var player = new Player(
                 signUpRequest.getUsername(),
                 signUpRequest.getFirstname(),

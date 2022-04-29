@@ -1,6 +1,4 @@
 package com.example.server.player;
-
-import com.example.server.token.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

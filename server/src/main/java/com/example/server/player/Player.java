@@ -72,7 +72,7 @@ public class Player {
     )
     private int winnings;
 
-    @ManyToMany (fetch = FetchType.LAZY)
+    @ManyToMany (fetch = FetchType.EAGER)   // with lazy type authorization didn't work
     @JoinTable (
             name = "player_to_role",
             joinColumns = @JoinColumn(name = "player_id"),

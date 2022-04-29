@@ -20,7 +20,7 @@ public class JwtUtils {
     public String generateJwtToken(Authentication authentication) {
         PlayerDetailsImpl playerPrincipal = (PlayerDetailsImpl) authentication.getPrincipal();
         return Jwts.builder()
-                .setSubject(playerPrincipal.getUsername())
+                .setSubject((playerPrincipal.getUsername()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
@@ -29,7 +29,6 @@ public class JwtUtils {
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
-
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
