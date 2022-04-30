@@ -99,6 +99,12 @@ public class Player {
         }
     }
 
+    public void removeRace(Race race) {
+        if (!this.races.contains(race)) {
+            this.races.remove(race);
+            race.setCreator(null);
+        }
+    }
 
     public Player() {
     }
