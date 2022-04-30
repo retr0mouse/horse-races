@@ -5,6 +5,7 @@ import com.example.server.services.RaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -35,5 +36,17 @@ public class RaceController {
     @DeleteMapping(path = "{id}")
     public void deleteRace(@PathVariable("id") Long id) {
         raceService.deleteRace(id);
+    }
+
+    @PutMapping(path = "{id}")
+    public void updateRace(@PathVariable("id") Long id,
+                           @RequestParam(required = false) String date,
+                           @RequestParam(required = false) String place) {
+        raceService.updateRace(id, date, place);
+    }
+
+    @PostMapping(path = "addHorse/{horseId}/{raceId}")
+    public void addHorseToRace(@PathVariable("horseId") Long horseId, @PathVariable("raceId") Long raceId) {
+        raceService.addHorseToRace(horseId, raceId);
     }
 }

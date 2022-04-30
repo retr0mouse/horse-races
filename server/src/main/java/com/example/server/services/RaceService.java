@@ -1,22 +1,28 @@
 package com.example.server.services;
 
 import com.example.server.models.Race;
+import com.example.server.repositories.HorseRepository;
 import com.example.server.repositories.PlayerRepository;
 import com.example.server.repositories.RaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class RaceService {
     private final RaceRepository raceRepository;
     private final PlayerRepository playerRepository;
+    private final HorseRepository horseRepository;
 
     @Autowired
-    public RaceService(RaceRepository raceRepository, PlayerRepository playerRepository) {
+    public RaceService(RaceRepository raceRepository, PlayerRepository playerRepository, HorseRepository horseRepository) {
         this.raceRepository = raceRepository;
         this.playerRepository = playerRepository;
+        this.horseRepository = horseRepository;
     }
 
     public List<Race> getAllRaces() {
@@ -44,5 +50,31 @@ public class RaceService {
                 "Race with id (" + id + ") does not exist"
         ));
         raceRepository.delete(race);
+    }
+
+    @Transactional
+    public void updateRace(Long id, String date, String place) {
+        var race = raceRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Race with id (" + id + ") does not exist"
+                ));
+        if (date != null && date.length() > 0 && !Objects.equals(date, race.getDate().toString())) {
+            race.setDate(LocalDate.parse(date));
+        }
+        if (place != null && place.length() > 0 && !Objects.equals(race.getPlace(), place)) {
+            race.setPlace(place);
+        }
+    }
+
+    @Transactional
+    public void addHorseToRace(Long horseId, Long raceId) {
+        var horse = horseRepository.findById(horseId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Horse with id (" + horseId + ") does not exist"
+                ));
+        var race = raceRepository.findById(raceId).orElseThrow(() -> new IllegalStateException(
+                "Race with id (" + raceId + ") does not exist"
+        ));
+        race.addHorse(horse);
     }
 }

@@ -1,7 +1,11 @@
 package com.example.server.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity (name = "Race")
 @Table(name = "race")
@@ -12,7 +16,7 @@ public class Race {
             allocationSize = 1
     )
     @GeneratedValue (
-            strategy = GenerationType.AUTO,
+            strategy = GenerationType.IDENTITY,
             generator = "race_sequence"
     )
     @Id
@@ -38,6 +42,42 @@ public class Race {
             foreignKey = @ForeignKey(name = "player_id_fk")
     )
     private Player creator;
+
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable (
+            name = "horse_in_race",
+            joinColumns = @JoinColumn(
+                    name = "horse_id",
+                    foreignKey = @ForeignKey(name = "horse_id_fk")
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "race_id",
+                    foreignKey = @ForeignKey(name = "race_id_fk")
+            )
+    )
+    private Set<Horse> horses = new HashSet<>();
+
+    public void addHorse(Horse horse) {
+        if (!this.horses.contains(horse)) {
+            this.horses.add(horse);
+            horse.getRaces().add(this);
+        }
+    }
+
+    public void removeHorse(Horse horse) {
+        if (!this.horses.contains(horse)) {
+            this.horses.remove(horse);
+            horse.getRaces().remove(this);
+        }
+    }
+
+    public Set<Horse> getHorses() {
+        return horses;
+    }
+
+    public void setHorses(Set<Horse> horses) {
+        this.horses = horses;
+    }
 
     public Long getId() {
         return id;

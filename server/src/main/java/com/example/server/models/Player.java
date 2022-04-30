@@ -23,7 +23,7 @@ public class Player {
             allocationSize = 1
     )
     @GeneratedValue (
-            strategy = GenerationType.AUTO,
+            strategy = GenerationType.IDENTITY,
             generator = "player_sequence"
     )
     @Column (
@@ -78,10 +78,11 @@ public class Player {
     @JoinTable (
             name = "player_to_role",
             joinColumns = @JoinColumn(
-                    name = "player_id",
-                    foreignKey = @ForeignKey(name = "player_id_fk")
+                    name = "player_id"
             ),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id"
+            )
     )
     private Set<Role> roles = new HashSet<>();
 
