@@ -4,18 +4,19 @@ import com.example.server.payload.request.LoginRequest;
 import com.example.server.payload.request.SignupRequest;
 import com.example.server.payload.response.JwtResponse;
 import com.example.server.payload.response.MessageResponse;
-import com.example.server.player.Player;
-import com.example.server.player.PlayerRepository;
-import com.example.server.player_details.PlayerDetailsImpl;
-import com.example.server.role.ERole;
-import com.example.server.role.Role;
-import com.example.server.role.RoleRepository;
+import com.example.server.models.Player;
+import com.example.server.repositories.PlayerRepository;
+import com.example.server.security.services.PlayerDetailsImpl;
+import com.example.server.enums.ERole;
+import com.example.server.models.Role;
+import com.example.server.repositories.RoleRepository;
 import com.example.server.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,7 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticatePlayer(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticatePlayer(@Valid @RequestBody LoginRequest loginRequest) throws AuthenticationException {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);

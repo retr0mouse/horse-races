@@ -1,6 +1,6 @@
 package com.example.server.security.jwt;
 
-import com.example.server.player_details.PlayerDetailsServiceImpl;
+import com.example.server.security.services.PlayerDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

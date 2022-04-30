@@ -58,12 +58,20 @@ export function Navigation(): ReactElement {
                         className={
                             ({ isActive }) => isActive ? activeClassName : undefined
                         }
-                        to="/registration">
+                        to="/registration"
+                    >
                         Registration page
                     </NavLink>
                 </ListItem>
                 <ListItem>
-                    <UserSummary/>
+                    <NavLink
+                        className={
+                            ({ isActive }) => isActive ? activeClassName : undefined
+                        }
+                        to="/create_race"
+                    >
+                        Create race
+                    </NavLink>
                 </ListItem>
             </UnorderedList>
         </nav>

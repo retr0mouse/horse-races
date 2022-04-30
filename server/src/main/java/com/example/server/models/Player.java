@@ -1,9 +1,11 @@
-package com.example.server.player;
+package com.example.server.models;
 
-import com.example.server.role.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity (name = "Player")
@@ -75,11 +77,28 @@ public class Player {
     @ManyToMany (fetch = FetchType.EAGER)   // with lazy type authorization didn't work
     @JoinTable (
             name = "player_to_role",
-            joinColumns = @JoinColumn(name = "player_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id",
-            foreignKey = @ForeignKey(name = "player_id_fk"))
+            joinColumns = @JoinColumn(
+                    name = "player_id",
+                    foreignKey = @ForeignKey(name = "player_id_fk")
+            ),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany (
+            mappedBy = "creator",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Race> races = new ArrayList<>();
+
+    public void addRace(Race race) {
+        if (!this.races.contains(race)) {
+            this.races.add(race);
+            race.setCreator(this);
+        }
+    }
+
 
     public Player() {
     }
@@ -102,6 +121,15 @@ public class Player {
         this.password = password;
         this.balance = balance;
         this.winnings = winnings;
+    }
+
+    @JsonBackReference  // to prevent StackOverflowError when accessing this method
+    public List<Race> getRaces() {
+        return races;
+    }
+
+    public void setRaces(List<Race> races) {
+        this.races = races;
     }
 
     public Long getId() {

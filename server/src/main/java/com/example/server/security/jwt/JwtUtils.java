@@ -1,6 +1,6 @@
 package com.example.server.security.jwt;
 
-import com.example.server.player_details.PlayerDetailsImpl;
+import com.example.server.security.services.PlayerDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

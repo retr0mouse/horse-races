@@ -1,5 +1,7 @@
-package com.example.server.player;
+package com.example.server.services;
 
+import com.example.server.models.Player;
+import com.example.server.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,17 +35,17 @@ public class PlayerService {
 //                ));
 //    }
 
-    public void addPlayer(Player player) {
-        var playerOptional = playerRepository.findPlayerByUsername(player.getUsername());
-        if (playerOptional.isPresent()) {
-            throw new IllegalStateException("Username " + player.getUsername() + " is already in use");
-        }
-        playerOptional = playerRepository.findPlayerByEmail(player.getEmail());
-        if (playerOptional.isPresent()) {
-            throw new IllegalStateException("Email " + player.getEmail() + " is already in use");
-        }
-        playerRepository.save(player);
-    }
+//    public void addPlayer(Player player) {
+//        var playerOptional = playerRepository.findPlayerByUsername(player.getUsername());
+//        if (playerOptional.isPresent()) {
+//            throw new IllegalStateException("Username " + player.getUsername() + " is already in use");
+//        }
+//        playerOptional = playerRepository.findPlayerByEmail(player.getEmail());
+//        if (playerOptional.isPresent()) {
+//            throw new IllegalStateException("Email " + player.getEmail() + " is already in use");
+//        }
+//        playerRepository.save(player);
+//    }
 
     public void deletePlayer(Long id) {
         playerRepository.findById(id).orElseThrow(() -> new IllegalStateException(

@@ -1,5 +1,7 @@
-package com.example.server.role;
+package com.example.server.repositories;
 
+import com.example.server.models.Role;
+import com.example.server.enums.ERole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
