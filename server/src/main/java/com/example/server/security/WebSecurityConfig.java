@@ -1,6 +1,6 @@
 package com.example.server.security;
 
-import com.example.server.player_details.PlayerDetailsServiceImpl;
+import com.example.server.security.services.PlayerDetailsServiceImpl;
 import com.example.server.security.jwt.AuthEntryPointJwt;
 import com.example.server.security.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;

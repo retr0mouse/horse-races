@@ -1,6 +1,6 @@
-package com.example.server.player_details;
+package com.example.server.security.services;
 
-import com.example.server.player.Player;
+import com.example.server.models.Player;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

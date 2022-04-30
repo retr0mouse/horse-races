@@ -1,4 +1,6 @@
-package com.example.server.role;
+package com.example.server.models;
+
+import com.example.server.enums.ERole;
 
 import javax.persistence.*;
 

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LoginInput } from "../components/LoginInput";
 import styled from "styled-components";
-import { PlayerAPI } from "../apis/PlayerAPI";
+import { PlayerAPI, ResponsePlayer } from "../apis/PlayerAPI";
 import { UserSummary } from "../components/UserSummary";
+import { Message } from "../components/Message";
+import { SignOutButton } from "../components/SignOutButton";
 
 let LoginContainer = styled.div`
     display: flex;
@@ -15,6 +17,16 @@ export function LoginPage() {
     const [username, setUsername] = useState("") as any;
     const [password, setPassword] = useState("") as any;
 
+    useEffect(() => {
+        if (!notice) {
+            return;
+        }
+        const timeout = setTimeout(() => setNotice(""), 2000);
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [notice])
+
     return (
         <LoginContainer>
             <h1>Login</h1>
@@ -23,17 +35,21 @@ export function LoginPage() {
                 onPasswordTyped={(event) => setPassword(event?.target.value)}
                 onClicked={() => login()}
             ></LoginInput>
-            <UserSummary/>
+            <Message 
+                message={notice}
+            ></Message>
+            <SignOutButton/>
         </LoginContainer>
     );
 
     async function login() {
         if (username != '' && password != '') {
             try {
-                const token = await PlayerAPI.loginPlayer(username, password);
-                window.sessionStorage.setItem("token", token);
+                const player = await PlayerAPI.loginPlayer(username, password) as ResponsePlayer;
+                window.sessionStorage.setItem("token", player.accessToken);
             } catch (error) {
-                setNotice("something went wrong: " + error)
+                console.log(error);
+                setNotice("Authorization " + error)
                 return;
             }
             setNotice("👍");

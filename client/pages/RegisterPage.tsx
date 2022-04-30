@@ -38,7 +38,7 @@ export function RegisterPage() {
         if (!notice) {
             return;
         }
-        const timeout = setTimeout(() => setNotice(""), 5000);
+        const timeout = setTimeout(() => setNotice(""), 2000);
         return () => {
             clearTimeout(timeout);
         };
@@ -57,7 +57,6 @@ export function RegisterPage() {
                 onWinningsTyped={(event) => setWinnings(event?.target.value)}
                 onClicked= {() => registerPlayer()}
             ></RegisterInput>
-            <UserSummary/>
             <Message 
                 message={notice}
             ></Message>

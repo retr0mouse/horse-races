@@ -58,7 +58,7 @@ export function RegisterInput(props: Props): ReactElement {
             </div>
             
             <div className="input-container">
-                <input name="password" type="text" placeholder="password" onChange={(event) => {
+                <input name="password" type="password" placeholder="password" onChange={(event) => {
                     props.onPasswordTyped(event);
                     setPasswordMessage(typeof event?.target.value === "undefined" || event?.target.value.length == 0 ? "please provide a password" : "");
                 }}/>

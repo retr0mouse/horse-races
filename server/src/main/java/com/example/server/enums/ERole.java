@@ -1,4 +1,4 @@
-package com.example.server.role;
+package com.example.server.enums;
 
 public enum ERole {
     ROLE_USER,

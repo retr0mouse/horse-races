@@ -1,4 +1,6 @@
-package com.example.server.player;
+package com.example.server.controllers;
+import com.example.server.models.Player;
+import com.example.server.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

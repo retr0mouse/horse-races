@@ -35,18 +35,15 @@ export class PlayerAPI {
 
         });
         if (!response.ok) {
-            throw new Error("Request failed with status code " + response.status);
+            const error = await response.json() as ResponseError;
+            throw new Error(error.message) ;
         }
         const player = await response.json() as ResponsePlayer;
-        return player.accessToken;
+        return player;
     }
 }
-interface Token {
-  id: string;
-  playerId: number;
-}
 
-interface ResponsePlayer {
+export interface ResponsePlayer {
   id: number;
   username: string;
   email: string;
@@ -54,13 +51,10 @@ interface ResponsePlayer {
   accessToken: string;
   tokenType: string;
 }
-// export interface Player {
-//   id: number;
-//   username: string;
-//   firstname: string;
-//   lastname: string;
-//   email: string;
-//   password: string;
-//   balance: number;
-//   winnings: number;
-// }
+
+export interface ResponseError {
+  path: string;
+  error: string;
+  message: string;
+  status: number;
+}

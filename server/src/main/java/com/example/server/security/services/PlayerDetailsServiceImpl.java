@@ -1,7 +1,8 @@
-package com.example.server.player_details;
+package com.example.server.security.services;
 
-import com.example.server.player.Player;
-import com.example.server.player.PlayerRepository;
+import com.example.server.models.Player;
+import com.example.server.repositories.PlayerRepository;
+import com.example.server.security.services.PlayerDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
