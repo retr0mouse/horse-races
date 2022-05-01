@@ -9,16 +9,16 @@ interface Props {
 export function Races(props: Props): ReactElement {
     return(
         <>
-            {/* <button onClick={() => props.onClicked()}>DO SOMETHING</button> */}
             {props.items?.map((race, index) => {
                 return (
-                    <ol>
-                        <li 
+                    <div>
+                        <p 
                             key={index}
                         >
-                        {race.date} in {race.place}
-                        </li>
-                    </ol>
+                            {race.date} in {race.place}, horses: {race.horses.length}
+                        </p>
+                        <button onClick={() => props.onClicked()}>Add horse</button>
+                    </div>
                     
                 )
             })}

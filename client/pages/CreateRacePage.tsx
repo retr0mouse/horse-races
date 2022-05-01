@@ -3,6 +3,7 @@ import { ResponsePlayer } from "../apis/AuthAPI";
 import { PlayerAPI } from "../apis/PlayerAPI";
 import { Race, RaceAPI } from "../apis/RaceAPI";
 import { CreateRaceInput } from "../components/CreateRaceInput";
+import { HorseInputs } from "../components/HorseInputs";
 import { Message } from "../components/Message";
 import { Races } from "../components/Races";
 import { SignOutButton } from "../components/SignOutButton";
@@ -13,10 +14,11 @@ export function CreateRacePage() {
     const [date, setDate] = useState("") as any;
     const [notice, setNotice] = useState("") as any;
     const [races, setRaces] = useState([]) as any;
+    const [showHorseInput, setShowHorseInput] = useState(false) as any;
 
     useEffect(() => {
         fetchRaces();
-    }, ["", races])
+    }, ["",  notice])
 
     useEffect(() => {
         if (!notice) {
@@ -38,8 +40,17 @@ export function CreateRacePage() {
             <Message 
                 message={notice}
             ></Message>
+            {showHorseInput?
+            <HorseInputs 
+                    onClickedClose={() => setShowHorseInput(!showHorseInput)} onNameTyped={function (event: any): void {
+                        throw new Error("Function not implemented.");
+                    } } onColorTyped={function (event: any): void {
+                        throw new Error("Function not implemented.");
+                    } } onClickedSubmit={function (): void {
+                        throw new Error("Function not implemented.");
+                    } }></HorseInputs>:null}
             <Races
-                onClicked={() => fetchRaces()}
+                onClicked={() => setShowHorseInput(!showHorseInput)}
                 items={races}
             ></Races>
             <SignOutButton/>
