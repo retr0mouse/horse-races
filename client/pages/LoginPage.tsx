@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LoginInput } from "../components/LoginInput";
 import styled from "styled-components";
-import { PlayerAPI, ResponsePlayer } from "../apis/PlayerAPI";
+import { AuthAPI, ResponsePlayer } from "../apis/AuthAPI";
 import { UserSummary } from "../components/UserSummary";
 import { Message } from "../components/Message";
 import { SignOutButton } from "../components/SignOutButton";
@@ -45,7 +45,7 @@ export function LoginPage() {
     async function login() {
         if (username != '' && password != '') {
             try {
-                const player = await PlayerAPI.loginPlayer(username, password) as ResponsePlayer;
+                const player = await AuthAPI.loginPlayer(username, password) as ResponsePlayer;
                 window.sessionStorage.setItem("token", player.accessToken);
             } catch (error) {
                 console.log(error);

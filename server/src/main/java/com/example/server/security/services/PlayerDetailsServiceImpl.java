@@ -20,4 +20,10 @@ public class PlayerDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Player with username (" + username + ") is not found"));
         return PlayerDetailsImpl.build(player);
     }
+
+    public UserDetails loadUserById(Long id) throws UsernameNotFoundException {
+        Player player = playerRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Player with id (" + id + ") is not found"));
+        return PlayerDetailsImpl.build(player);
+    }
 }

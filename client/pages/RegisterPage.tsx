@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RegisterInput } from "../components/RegisterInput";
 import styled from "styled-components";
-import { PlayerAPI } from "../apis/PlayerAPI";
+import { AuthAPI } from "../apis/AuthAPI";
 import { Message } from "../components/Message";
 import { UserSummary } from "../components/UserSummary";
 
@@ -55,7 +55,7 @@ export function RegisterPage() {
                 onPasswordTyped={(event) => setPassword(event?.target.value)}
                 onBalanceTyped={(event) => setBalance(event?.target.value)}
                 onWinningsTyped={(event) => setWinnings(event?.target.value)}
-                onClicked= {() => registerPlayer()}
+                onClicked={() => registerPlayer()}
             ></RegisterInput>
             <Message 
                 message={notice}
@@ -66,9 +66,9 @@ export function RegisterPage() {
     async function registerPlayer() {
         if (username != '' && firstname != '' && lastname != '' && email != '' && password != '' && balance != '' && winnings != '') {
             try {
-                await PlayerAPI.registerPlayer(username, firstname, lastname, email, password, balance, winnings);
+                await AuthAPI.registerPlayer(username, firstname, lastname, email, password, balance, winnings);
             } catch (error) {
-                setNotice("something went wrong: " + error);
+                setNotice("Registration " + error);
                 return;
             }
             setNotice("👍");    
