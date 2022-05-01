@@ -103,6 +103,7 @@ public class Race {
         this.place = place;
     }
 
+    @JsonBackReference
     public Player getCreator() {
         return creator;
     }

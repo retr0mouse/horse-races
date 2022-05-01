@@ -77,4 +77,12 @@ public class RaceService {
         ));
         race.addHorse(horse);
     }
+
+    public List<Race> getRacesByCreatorId(Long creatorId) {
+        var player = playerRepository.findById(creatorId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Player with id (" + creatorId + ") does not exist"
+                ));
+        return player.getRaces();
+    }
 }

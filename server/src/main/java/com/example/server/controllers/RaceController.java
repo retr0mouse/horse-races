@@ -5,7 +5,6 @@ import com.example.server.services.RaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -26,6 +25,11 @@ public class RaceController {
     @GetMapping(value = "get", params = "id")
     public Race getRaceById(@RequestParam Long id) {
         return raceService.getRaceById(id);
+    }
+
+    @GetMapping(value = "get", params = "creatorId")
+    public List<Race> getRacesByCreatorId(@RequestParam Long creatorId) {
+        return raceService.getRacesByCreatorId(creatorId);
     }
 
     @PostMapping(value = "add", params = "creator")

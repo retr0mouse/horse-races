@@ -130,7 +130,6 @@ public class Player {
         this.winnings = winnings;
     }
 
-    @JsonBackReference  // to prevent StackOverflowError when accessing this method
     public List<Race> getRaces() {
         return races;
     }
