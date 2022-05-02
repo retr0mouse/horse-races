@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity (name = "Race")
@@ -55,7 +57,7 @@ public class Race {
                     foreignKey = @ForeignKey(name = "race_id_fk")
             )
     )
-    private Set<Horse> horses = new HashSet<>();
+    private List<Horse> horses = new ArrayList<>();
 
     public void addHorse(Horse horse) {
         if (!this.horses.contains(horse)) {
@@ -71,11 +73,11 @@ public class Race {
         }
     }
 
-    public Set<Horse> getHorses() {
+    public List<Horse> getHorses() {
         return horses;
     }
 
-    public void setHorses(Set<Horse> horses) {
+    public void setHorses(List<Horse> horses) {
         this.horses = horses;
     }
 

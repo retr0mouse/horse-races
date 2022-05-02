@@ -40,7 +40,8 @@ export function Navigation(): ReactElement {
                         className={
                             ({ isActive }) => isActive ? activeClassName : undefined
                         }
-                        to="/">
+                        to="/"
+                    >
                         Home
                     </NavLink>
                 </ListItem>
@@ -49,7 +50,8 @@ export function Navigation(): ReactElement {
                         className={
                             ({ isActive }) => isActive ? activeClassName : undefined
                         }
-                        to="/login">
+                        to="/login"
+                    >
                         Login page
                     </NavLink>
                 </ListItem>

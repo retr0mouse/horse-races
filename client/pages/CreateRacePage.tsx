@@ -1,7 +1,8 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { ResponsePlayer } from "../apis/AuthAPI";
+import { HorseAPI } from "../apis/HorseAPI";
 import { PlayerAPI } from "../apis/PlayerAPI";
-import { Race, RaceAPI } from "../apis/RaceAPI";
+import { Horse, Race, RaceAPI } from "../apis/RaceAPI";
 import { CreateRaceInput } from "../components/CreateRaceInput";
 import { HorseInputs } from "../components/HorseInputs";
 import { Message } from "../components/Message";
@@ -10,11 +11,16 @@ import { SignOutButton } from "../components/SignOutButton";
 import { UserSummary } from "../components/UserSummary";
 
 export function CreateRacePage() {
-    const [place, setPlace] = useState("") as any;
-    const [date, setDate] = useState("") as any;
+    const [racePlace, setRacePlace] = useState("") as any;
+    const [raceDate, setRaceDate] = useState("") as any;
+    const [horseName, setHorseName] = useState("") as any;
+    const [horseColor, setHorseColor] = useState("") as any;
     const [notice, setNotice] = useState("") as any;
     const [races, setRaces] = useState([]) as any;
+    const [horses, setHorses] = useState([]) as any;
+    const [selectedHorseId, setSelectedHorseId] = useState() as any;
     const [showHorseInput, setShowHorseInput] = useState(false) as any;
+    const [selectedRaceId, setSelectedRaceId] = useState() as any;
 
     useEffect(() => {
         fetchRaces();
@@ -30,11 +36,15 @@ export function CreateRacePage() {
         };
     }, [notice])
 
+    useEffect(() => {
+        fetchHorses();
+    }, [selectedRaceId])
+
     return (
         <>
             <CreateRaceInput
-                onPlaceTyped={(event) => setPlace(event?.target.value)}
-                onDateEntered={(event) => setDate(event?.target.value)}
+                onPlaceTyped={(event) => setRacePlace(event?.target.value)}
+                onDateEntered={(event) => setRaceDate(event?.target.value)}
                 onClicked={() => addRace()}
             ></CreateRaceInput>
             <Message 
@@ -42,26 +52,34 @@ export function CreateRacePage() {
             ></Message>
             {showHorseInput?
             <HorseInputs 
-                    onClickedClose={() => setShowHorseInput(!showHorseInput)} onNameTyped={function (event: any): void {
-                        throw new Error("Function not implemented.");
-                    } } onColorTyped={function (event: any): void {
-                        throw new Error("Function not implemented.");
-                    } } onClickedSubmit={function (): void {
-                        throw new Error("Function not implemented.");
-                    } }></HorseInputs>:null}
+                place={races[selectedRaceId].place}
+                onClickedClose={() => setShowHorseInput(!showHorseInput)}
+                onNameTyped={(event) => setHorseName(event?.target.value)}
+                onColorTyped={(event) => setHorseColor(event?.target.value)}
+                onClickedCreate={() => createHorse()}
+                onClickedAdd={() => addHorseToRace(races[selectedRaceId]?.id, horses[selectedHorseId]?.id)}
+                horses={horses} 
+                selectedHorseId={selectedHorseId}
+                onHorseSelected={(horseId) => setSelectedHorseId(horseId)}
+            ></HorseInputs>:null}
             <Races
-                onClicked={() => setShowHorseInput(!showHorseInput)}
+                onClicked={(raceId) => {
+                    setShowHorseInput(!showHorseInput);
+                    setSelectedRaceId(raceId);
+                    setSelectedHorseId("");
+                }}
                 items={races}
             ></Races>
+            {/* {console.log(races[selectedRaceId]?.place, horses[selectedHorseId]?.name, horses[selectedHorseId]?.color)} */}
             <SignOutButton/>
         </>
     );
 
     async function addRace() {
-        if (place != '' && date != '') {
+        if (racePlace != '' && raceDate != '') {
             try {
                 const player = await PlayerAPI.getPlayer() as ResponsePlayer;
-                await RaceAPI.createRace(place, date, player.username);
+                await RaceAPI.createRace(racePlace, raceDate, player.username);
             } catch (error) {
                 setNotice("Creation " + error);
                 return;
@@ -80,4 +98,47 @@ export function CreateRacePage() {
             return;
         }
     }
+
+    async function fetchHorses() {
+        if (selectedRaceId != "") {
+            try {
+                const horses = await RaceAPI.getAvailableHorses(races[selectedRaceId].id);
+                console.log(races[selectedRaceId].id);
+                setHorses(horses);
+            } catch (error) {
+                return;
+            }
+        }
+    }
+
+    async function createHorse() {
+        if (horseName != "" && horseColor != "") {
+            try {
+                await HorseAPI.createHorse(horseName, horseColor);
+            } catch(error) {
+                console.log(error);
+                setNotice("Horse creation " + error)
+                return;
+            }
+            setNotice("👍");
+            return; 
+        }
+    }
+
+    async function addHorseToRace(raceId: number, horseId: number) {
+        if (raceId != undefined && horseId != undefined) {
+            try {
+                await RaceAPI.addHorseToRace(raceId, horseId);
+            } catch(error) {
+                console.log(error);
+                setNotice("Horse in race adding " + error)
+                return;
+            }
+            setNotice("👍");
+            return; 
+        }
+    }
 }
+
+
+

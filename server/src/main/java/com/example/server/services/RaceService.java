@@ -1,5 +1,6 @@
 package com.example.server.services;
 
+import com.example.server.models.Horse;
 import com.example.server.models.Race;
 import com.example.server.repositories.HorseRepository;
 import com.example.server.repositories.PlayerRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -75,6 +77,11 @@ public class RaceService {
         var race = raceRepository.findById(raceId).orElseThrow(() -> new IllegalStateException(
                 "Race with id (" + raceId + ") does not exist"
         ));
+        if (race.getHorses().contains(horse)) {
+            throw new IllegalStateException(
+                    "This horse in race relation does already exist"
+            );
+        }
         race.addHorse(horse);
     }
 
@@ -84,5 +91,26 @@ public class RaceService {
                         "Player with id (" + creatorId + ") does not exist"
                 ));
         return player.getRaces();
+    }
+
+    public List<Horse> getHorsesByRace(Long raceId) {
+        var race = raceRepository.findById(raceId).orElseThrow(() -> new IllegalStateException(
+                "Race with id (" + raceId + ") does not exist"
+        ));
+        return race.getHorses();
+    }
+
+    public List<Horse> getAvailableHorses(Long raceId) {
+        var race = raceRepository.findById(raceId).orElseThrow(() -> new IllegalStateException(
+                "Race with id (" + raceId + ") does not exist"
+        ));
+        var horses = horseRepository.findAll();
+        var horsesNotInRace = new ArrayList<Horse>();
+        for (Horse horse: horses) {
+            if(!race.getHorses().contains(horse)) {
+                horsesNotInRace.add(horse);
+            }
+        }
+        return horsesNotInRace;
     }
 }

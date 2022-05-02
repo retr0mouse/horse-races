@@ -1,5 +1,6 @@
 package com.example.server.controllers;
 
+import com.example.server.models.Horse;
 import com.example.server.models.Race;
 import com.example.server.services.RaceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,16 @@ public class RaceController {
     @GetMapping(value = "get", params = "creatorId")
     public List<Race> getRacesByCreatorId(@RequestParam Long creatorId) {
         return raceService.getRacesByCreatorId(creatorId);
+    }
+
+    @GetMapping(value = "get", params = "raceId")
+    public List<Horse> getHorsesByRace(@RequestParam Long raceId) {
+        return raceService.getHorsesByRace(raceId);
+    }
+
+    @GetMapping(value = "getNot", params = "raceId")
+    public List<Horse> getAvailableHorses(@RequestParam Long raceId) {
+        return raceService.getAvailableHorses(raceId);
     }
 
     @PostMapping(value = "add", params = "creator")

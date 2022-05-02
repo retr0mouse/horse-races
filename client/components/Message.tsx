@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import styled from "styled-components";
 
 const MessageBox = styled.div`
+    z-index: 50;
     background-color: aquamarine;
     border-radius: 5px;
     padding: 5px;

@@ -1,13 +1,11 @@
 package com.example.server.controllers;
 
 import com.example.server.models.Horse;
-import com.example.server.repositories.HorseRepository;
 import com.example.server.services.HorseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/horse")
