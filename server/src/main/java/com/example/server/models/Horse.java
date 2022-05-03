@@ -33,18 +33,29 @@ public class Horse {
     )
     private String color;
 
-    @ManyToMany(
-            mappedBy = "horses"
+    @OneToMany(
+            mappedBy = "horse",
+            cascade = CascadeType.ALL
     )
-    private List<Race> races = new ArrayList<>();
+    private List<HorseInRace> horseInRaces = new ArrayList<>();
 
-    @JsonBackReference
-    public List<Race> getRaces() {
-        return races;
+    public void addHorseInRace(HorseInRace horseInRace) {
+        if (!horseInRaces.contains(horseInRace)) {
+            horseInRaces.add(horseInRace);
+        }
     }
 
-    public void setRaces(List<Race> races) {
-        this.races = races;
+    public void removeHorseInRace(HorseInRace horseInRace) {
+        horseInRaces.remove(horseInRace);
+    }
+
+    @JsonBackReference(value = "horseInRaces-horse")
+    public List<HorseInRace> getHorseInRaces() {
+        return horseInRaces;
+    }
+
+    public void setHorseInRaces(List<HorseInRace> horseInRaces) {
+        this.horseInRaces = horseInRaces;
     }
 
     public Long getId() {

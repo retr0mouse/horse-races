@@ -15,7 +15,7 @@ export function Races(props: Props): ReactElement {
                         key={index}
                     >
                         <p>
-                            {race.date} in {race.place}, horses: {race.horses.length}
+                            {race.date} in {race.place}, horses: {race.horseInRaces?.length}
                         </p>
                         <button onClick={() => props.onClicked(index)}>Add horse</button>
                     </div>

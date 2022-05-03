@@ -45,40 +45,29 @@ public class Race {
     )
     private Player creator;
 
-    @ManyToMany (fetch = FetchType.EAGER)
-    @JoinTable (
-            name = "horse_in_race",
-            joinColumns = @JoinColumn(
-                    name = "horse_id",
-                    foreignKey = @ForeignKey(name = "horse_id_fk")
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "race_id",
-                    foreignKey = @ForeignKey(name = "race_id_fk")
-            )
+    @OneToMany (
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            mappedBy = "race",
+            fetch = FetchType.EAGER
     )
-    private List<Horse> horses = new ArrayList<>();
+    private List<HorseInRace> horseInRaces = new ArrayList<>();
 
-    public void addHorse(Horse horse) {
-        if (!this.horses.contains(horse)) {
-            this.horses.add(horse);
-            horse.getRaces().add(this);
+    public void addHorseInRace(HorseInRace horseInRace) {
+        if (!horseInRaces.contains(horseInRace)) {
+            horseInRaces.add(horseInRace);
         }
     }
 
-    public void removeHorse(Horse horse) {
-        if (!this.horses.contains(horse)) {
-            this.horses.remove(horse);
-            horse.getRaces().remove(this);
-        }
+    public void removeHorseInRace(HorseInRace horseInRace) {
+        horseInRaces.remove(horseInRace);
     }
 
-    public List<Horse> getHorses() {
-        return horses;
+    public List<HorseInRace> getHorseInRaces() {
+        return horseInRaces;
     }
 
-    public void setHorses(List<Horse> horses) {
-        this.horses = horses;
+    public void setHorseInRaces(List<HorseInRace> horseInRaces) {
+        this.horseInRaces = horseInRaces;
     }
 
     public Long getId() {

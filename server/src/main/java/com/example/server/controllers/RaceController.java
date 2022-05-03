@@ -33,12 +33,12 @@ public class RaceController {
         return raceService.getRacesByCreatorId(creatorId);
     }
 
-    @GetMapping(value = "get", params = "raceId")
-    public List<Horse> getHorsesByRace(@RequestParam Long raceId) {
-        return raceService.getHorsesByRace(raceId);
+    @GetMapping(value = "getHorses", params = "id")
+    public List<Horse> getHorses(@RequestParam Long id) {
+        return raceService.getHorses(id);
     }
 
-    @GetMapping(value = "getNot", params = "raceId")
+    @GetMapping(value = "getAvailableHorses", params = "raceId")
     public List<Horse> getAvailableHorses(@RequestParam Long raceId) {
         return raceService.getAvailableHorses(raceId);
     }

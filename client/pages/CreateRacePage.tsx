@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { ResponsePlayer } from "../apis/AuthAPI";
 import { HorseAPI } from "../apis/HorseAPI";
 import { PlayerAPI } from "../apis/PlayerAPI";
-import { Horse, Race, RaceAPI } from "../apis/RaceAPI";
+import { Horse, RaceAPI } from "../apis/RaceAPI";
 import { CreateRaceInput } from "../components/CreateRaceInput";
 import { HorseInputs } from "../components/HorseInputs";
 import { Message } from "../components/Message";
@@ -20,7 +20,7 @@ export function CreateRacePage() {
     const [horses, setHorses] = useState([]) as any;
     const [selectedHorseId, setSelectedHorseId] = useState() as any;
     const [showHorseInput, setShowHorseInput] = useState(false) as any;
-    const [selectedRaceId, setSelectedRaceId] = useState() as any;
+    const [selectedRaceId, setSelectedRaceId] = useState(0) as any;
 
     useEffect(() => {
         fetchRaces();
@@ -38,7 +38,7 @@ export function CreateRacePage() {
 
     useEffect(() => {
         fetchHorses();
-    }, [selectedRaceId])
+    }, [showHorseInput])
 
     return (
         <>
@@ -50,18 +50,6 @@ export function CreateRacePage() {
             <Message 
                 message={notice}
             ></Message>
-            {showHorseInput?
-            <HorseInputs 
-                place={races[selectedRaceId].place}
-                onClickedClose={() => setShowHorseInput(!showHorseInput)}
-                onNameTyped={(event) => setHorseName(event?.target.value)}
-                onColorTyped={(event) => setHorseColor(event?.target.value)}
-                onClickedCreate={() => createHorse()}
-                onClickedAdd={() => addHorseToRace(races[selectedRaceId]?.id, horses[selectedHorseId]?.id)}
-                horses={horses} 
-                selectedHorseId={selectedHorseId}
-                onHorseSelected={(horseId) => setSelectedHorseId(horseId)}
-            ></HorseInputs>:null}
             <Races
                 onClicked={(raceId) => {
                     setShowHorseInput(!showHorseInput);
@@ -70,7 +58,21 @@ export function CreateRacePage() {
                 }}
                 items={races}
             ></Races>
-            {/* {console.log(races[selectedRaceId]?.place, horses[selectedHorseId]?.name, horses[selectedHorseId]?.color)} */}
+            {showHorseInput?
+            <HorseInputs 
+                place={races[selectedRaceId].place}
+                onClickedClose={() => {
+                    setShowHorseInput(!showHorseInput);
+                    setSelectedRaceId(0);
+                }}
+                onNameTyped={(event) => setHorseName(event?.target.value)}
+                onColorTyped={(event) => setHorseColor(event?.target.value)}
+                onClickedCreate={() => createHorse()}
+                onClickedAdd={() => addHorseToRace(races[selectedRaceId]?.id, horses[selectedHorseId]?.id)}
+                horses={horses} 
+                selectedHorseId={selectedHorseId}
+                onHorseSelected={(horseId) => setSelectedHorseId(horseId)}
+            ></HorseInputs>:null}
             <SignOutButton/>
         </>
     );
@@ -102,8 +104,8 @@ export function CreateRacePage() {
     async function fetchHorses() {
         if (selectedRaceId != "") {
             try {
-                const horses = await RaceAPI.getAvailableHorses(races[selectedRaceId].id);
-                console.log(races[selectedRaceId].id);
+                const horses = await RaceAPI.getAvailableHorses(races[selectedRaceId]?.id);
+                console.log(selectedRaceId);
                 setHorses(horses);
             } catch (error) {
                 return;

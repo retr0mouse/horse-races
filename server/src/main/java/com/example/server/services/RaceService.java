@@ -1,7 +1,9 @@
 package com.example.server.services;
 
 import com.example.server.models.Horse;
+import com.example.server.models.HorseInRace;
 import com.example.server.models.Race;
+import com.example.server.repositories.HorseInRaceRepository;
 import com.example.server.repositories.HorseRepository;
 import com.example.server.repositories.PlayerRepository;
 import com.example.server.repositories.RaceRepository;
@@ -19,12 +21,14 @@ public class RaceService {
     private final RaceRepository raceRepository;
     private final PlayerRepository playerRepository;
     private final HorseRepository horseRepository;
+    private final HorseInRaceRepository horseInRaceRepository;
 
     @Autowired
-    public RaceService(RaceRepository raceRepository, PlayerRepository playerRepository, HorseRepository horseRepository) {
+    public RaceService(RaceRepository raceRepository, PlayerRepository playerRepository, HorseRepository horseRepository, HorseInRaceRepository horseInRaceRepository) {
         this.raceRepository = raceRepository;
         this.playerRepository = playerRepository;
         this.horseRepository = horseRepository;
+        this.horseInRaceRepository = horseInRaceRepository;
     }
 
     public List<Race> getAllRaces() {
@@ -77,12 +81,13 @@ public class RaceService {
         var race = raceRepository.findById(raceId).orElseThrow(() -> new IllegalStateException(
                 "Race with id (" + raceId + ") does not exist"
         ));
-        if (race.getHorses().contains(horse)) {
+        var horseInRace = new HorseInRace(horse, race);
+        if (race.getHorseInRaces().contains(horseInRace)) {
             throw new IllegalStateException(
                     "This horse in race relation does already exist"
             );
         }
-        race.addHorse(horse);
+        race.addHorseInRace(horseInRace);
     }
 
     public List<Race> getRacesByCreatorId(Long creatorId) {
@@ -93,24 +98,21 @@ public class RaceService {
         return player.getRaces();
     }
 
-    public List<Horse> getHorsesByRace(Long raceId) {
+
+    public List<Horse> getHorses(Long raceId) {
         var race = raceRepository.findById(raceId).orElseThrow(() -> new IllegalStateException(
                 "Race with id (" + raceId + ") does not exist"
         ));
-        return race.getHorses();
+        return horseInRaceRepository.findAll().stream()
+                .filter(relations -> relations.getRace().equals(race))
+                .map(HorseInRace::getHorse)
+                .toList();
     }
 
     public List<Horse> getAvailableHorses(Long raceId) {
-        var race = raceRepository.findById(raceId).orElseThrow(() -> new IllegalStateException(
-                "Race with id (" + raceId + ") does not exist"
-        ));
-        var horses = horseRepository.findAll();
-        var horsesNotInRace = new ArrayList<Horse>();
-        for (Horse horse: horses) {
-            if(!race.getHorses().contains(horse)) {
-                horsesNotInRace.add(horse);
-            }
-        }
-        return horsesNotInRace;
+        var thisHorses = getHorses(raceId);
+        var allHorses = horseRepository.findAll();
+        allHorses.removeAll(thisHorses);
+        return allHorses;
     }
 }
