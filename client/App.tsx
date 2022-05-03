@@ -7,6 +7,7 @@ import { CreateRacePage } from "./pages/CreateRacePage";
 import { Home } from "./pages/Home";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
+import { StartRacePage } from "./pages/StartRacePage";
 
 const BodyContainer = styled.div`
     display: flex;
@@ -24,6 +25,7 @@ export default function App() {
                 <Route path="/registration" element={<RegisterPage/>}></Route>
                 <Route path="/create_race" element={<CreateRacePage/>}></Route>
                 <Route path="/bet" element={<BetPage/>}></Route>
+                <Route path="/raceStart" element={<StartRacePage/>}></Route>
             </Routes>
         </BodyContainer>
         </>
