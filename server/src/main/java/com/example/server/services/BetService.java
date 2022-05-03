@@ -35,8 +35,9 @@ public class BetService {
         Optional<HorseInRace> horseInRace = horseInRaceRepository.findById(betId.getHorseInRaceId());
         Optional<Player> player = playerRepository.findById(betId.getPlayerId());
         if (horseInRace.isEmpty()) {
-            throw new IllegalStateException("The 'horse in race' field with id (" +
-                    betId.getHorseInRaceId() + ") is already in the database");
+            throw new IllegalStateException("The horse with id (" +
+                    betId.getHorseInRaceId().getHorseId() + ") does not participate in race with id (" +
+                    betId.getHorseInRaceId().getRaceId() + ")");
         }
         if (player.isEmpty()) {
             throw new IllegalStateException("The player with id (" +

@@ -1,4 +1,4 @@
-import { ResponseError } from "../errors/ResponseError";
+import { ResponseError } from "../responses/ApiError";
 
 export class HorseAPI {
     static async createHorse(name: string, color: string) {
@@ -41,7 +41,7 @@ export class HorseAPI {
     }
 } 
 
-interface Horse {
+export interface Horse {
     id: number;
     name: string;
     color: string;

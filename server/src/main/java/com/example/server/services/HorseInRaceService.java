@@ -9,6 +9,7 @@ import com.example.server.repositories.HorseRepository;
 import com.example.server.repositories.RaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,5 +55,15 @@ public class HorseInRaceService {
                 horse.get(),
                 race.get())
         );
+    }
+
+    @Transactional
+    public void addPosition(Long horseId, Long raceId, Integer placement) {
+        var horseInRace = horseInRaceRepository.findById(new HorseInRaceId(horseId, raceId))
+                .orElseThrow(() -> new IllegalStateException(
+                        "Inserted relation: (horseId: " + horseId + ", raceId: " + raceId + ") does not exist"));
+        if (placement != null && placement > 0) {
+            horseInRace.setPosition(placement);
+        }
     }
 }

@@ -23,6 +23,17 @@ public class HorseInRace {
     @JoinColumn(name = "race_id")
     private Race race;
 
+    @Column (name = "position")
+    private Integer position;
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
     public HorseInRaceId getId() {
         return id;
     }
@@ -55,7 +66,6 @@ public class HorseInRace {
         this.id = id;
     }
 
-    @JsonBackReference(value = "horse-horseInRace")
     public Horse getHorse() {
         return horse;
     }

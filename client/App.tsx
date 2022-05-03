@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { Navigation } from "./components/Navigation";
+import { BetPage } from "./pages/BetPage";
 import { CreateRacePage } from "./pages/CreateRacePage";
 import { Home } from "./pages/Home";
 import { LoginPage } from "./pages/LoginPage";
@@ -22,6 +23,7 @@ export default function App() {
                 <Route path="/login" element={<LoginPage/>}></Route>
                 <Route path="/registration" element={<RegisterPage/>}></Route>
                 <Route path="/create_race" element={<CreateRacePage/>}></Route>
+                <Route path="/bet" element={<BetPage/>}></Route>
             </Routes>
         </BodyContainer>
         </>

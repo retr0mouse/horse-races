@@ -75,6 +75,16 @@ export function Navigation(): ReactElement {
                         Create race
                     </NavLink>
                 </ListItem>
+                <ListItem>
+                    <NavLink
+                        className={
+                            ({ isActive }) => isActive ? activeClassName : undefined
+                        }
+                        to="/bet"
+                    >
+                        Bet
+                    </NavLink>
+                </ListItem>
             </UnorderedList>
         </nav>
     );

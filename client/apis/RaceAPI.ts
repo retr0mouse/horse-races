@@ -1,4 +1,4 @@
-import { ResponseError } from "../errors/ResponseError";
+import { ResponseError } from "../responses/ApiError";
 
 export class RaceAPI {
     static async createRace(place: string, date: string, username: string) {
@@ -40,23 +40,23 @@ export class RaceAPI {
         return races;
     }
 
-    // static async getHorsesInRace(raceId: number) {
-    //     const token = sessionStorage.getItem("token");
-    //     const response = await fetch(`http://localhost:8080/api/v1/race/get?raceId=${raceId}`, {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': 'Bearer ' + token
-    //         }
-    //     });
-    //     if (!response.ok) {
-    //         const error = await response.json() as ResponseError;
-    //         throw new Error(error.message);
-    //     }
-    //     const horses = await response.json() as Horse;
-    //     return horses;
-    // }
+    static async getHorsesInRace(raceId: number): Promise<Horse[]> {
+        const token = sessionStorage.getItem("token");
+        const response = await fetch(`http://localhost:8080/api/v1/race/get?raceId=${raceId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        });
+        if (!response.ok) {
+            const error = await response.json() as ResponseError;
+            throw new Error(error.message);
+        }
+        const horses = await response.json() as Horse[];
+        return horses;
+    }
 
-    static async getAvailableHorses(raceId: number) {
+    static async getAvailableHorses(raceId: number): Promise<Horse[]> {
         const token = sessionStorage.getItem("token");
         const response = await fetch(`http://localhost:8080/api/v1/race/getAvailableHorses?raceId=${raceId}`, {
             headers: {
@@ -68,7 +68,7 @@ export class RaceAPI {
             const error = await response.json() as ResponseError;
             throw new Error(error.message);
         }
-        const horses = await response.json() as Horse;
+        const horses = await response.json() as Horse[];
         return horses;
     }
 
@@ -97,15 +97,6 @@ export class RaceAPI {
 
 }
 
-
-export interface Horse {
-  includes(element: object): boolean;
-  id: number;
-  name: string;
-  color: string;
-  filter: any;
-}
-
 export interface Race {
   id: number;
   date: string;
@@ -113,11 +104,29 @@ export interface Race {
   horseInRaces: HorseInRace[];
 }
 
-interface HorseInRace {
+export interface HorseInRace {
   id: Id;
+  horse: Horse;
+  position?: number;
+  bets: Bet[];
 }
 
-interface Id {
+export interface Bet {
+  id: Id2;
+  amount: number;
+}
+
+export interface Id2 {
+  playerId: number;
+}
+
+export interface Horse {
+  id: number;
+  name: string;
+  color: string;
+}
+
+export interface Id {
   horseId: number;
   raceId: number;
 }

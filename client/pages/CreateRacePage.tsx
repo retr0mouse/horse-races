@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { ResponsePlayer } from "../apis/AuthAPI";
 import { HorseAPI } from "../apis/HorseAPI";
 import { PlayerAPI } from "../apis/PlayerAPI";
-import { Horse, RaceAPI } from "../apis/RaceAPI";
+import { RaceAPI } from "../apis/RaceAPI";
 import { CreateRaceInput } from "../components/CreateRaceInput";
 import { HorseInputs } from "../components/HorseInputs";
 import { Message } from "../components/Message";
@@ -73,7 +73,6 @@ export function CreateRacePage() {
                 onHorseSelected={(horseId) => setSelectedHorseId(horseId)}
             ></HorseInputs>:null}
             <SignOutButton/>
-            {console.log(showHorseInput)}
         </>
     );
 
@@ -92,6 +91,7 @@ export function CreateRacePage() {
     }
 
     async function fetchRaces() {
+        await HorseAPI.getHorses();
         const playerId = (await PlayerAPI.getPlayer()).id;
         try {
             const racesList = await RaceAPI.getRaces(playerId);

@@ -1,5 +1,7 @@
 package com.example.server.keys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
@@ -38,6 +40,7 @@ public class BetId implements Serializable {
     public BetId() {
     }
 
+    @JsonBackReference(value = "horse-in-race-bet")
     public HorseInRaceId getHorseInRaceId() {
         return horseInRaceId;
     }

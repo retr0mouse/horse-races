@@ -28,6 +28,13 @@ public class HorseInRaceController {
         horseInRaceService.addHorseInRace(horseInRaceId);
     }
 
+    @PutMapping(path = "{horseId}/{raceId}")
+    public void addPosition(@PathVariable("horseId") Long horseId,
+                            @PathVariable("raceId") Long raceId,
+                            @RequestParam Integer placement) {
+        horseInRaceService.addPosition(horseId, raceId, placement);
+    }
+
 //    @DeleteMapping(path = "{horseId}/{raceId}")
 //    public void deleteHorseInRace(@PathVariable("horseId") Long horseId, @PathVariable("raceId") Long raceId) {
 //        horseInRaceService.deleteHorseInRace(horseId, raceId);
