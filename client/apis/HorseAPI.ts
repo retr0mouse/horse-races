@@ -39,6 +39,24 @@ export class HorseAPI {
         const horses = await response.json() as Horse;
         return horses;
     }
+    
+    static async addPosition(horseId: number, raceId: number, placement: number) {
+        const token = sessionStorage.getItem("token");
+        if (token == null) {
+            throw new Error("You need to sign in first");
+        }
+        const response = await fetch(`http://localhost:8080/api/v1/horseInRace/${horseId}/${raceId}?placement=${placement}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        });
+        if (!response.ok) {
+            const error = await response.json() as ResponseError;
+            throw new Error(error.message);
+        }
+    }
 } 
 
 export interface Horse {

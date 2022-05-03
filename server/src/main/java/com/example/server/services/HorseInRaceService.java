@@ -59,6 +59,7 @@ public class HorseInRaceService {
 
     @Transactional
     public void addPosition(Long horseId, Long raceId, Integer placement) {
+        System.out.println(placement);
         var horseInRace = horseInRaceRepository.findById(new HorseInRaceId(horseId, raceId))
                 .orElseThrow(() -> new IllegalStateException(
                         "Inserted relation: (horseId: " + horseId + ", raceId: " + raceId + ") does not exist"));

@@ -57,6 +57,7 @@ export function CreateRacePage() {
                     setSelectedHorseId("");
                 }}
                 items={races}
+                buttonTitle="Add Horse"
             ></Races>
             {showHorseInput?
             <HorseInputs 
