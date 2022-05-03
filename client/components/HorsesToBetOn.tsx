@@ -4,7 +4,6 @@ import { Race, HorseInRace, RaceAPI } from "../apis/RaceAPI";
 
 interface Props {
     races: Race[];
-    playerId: number;
     onSelected(selection: any): void;
     onClicked(query: any): void;
     onTyped(text: any): void;
@@ -19,10 +18,7 @@ export function HorsesToBetOn(props: Props): ReactElement {
                     <h1>{race.place} on {race.date}</h1>
                     <select defaultValue={"Choose a horse"} onChange={(event) => props.onSelected(event.target.value)}>
                         <option disabled value="" key={index}>Choose a horse</option>
-                        {race.horseInRaces
-                        .filter(relation => relation.bets.forEach(bet => 
-                            bet.id != {playerId: props.playerId}
-                        )).map((relation, id) => 
+                        {race.horseInRaces.map((relation, id) => 
                             <option
                                 key={index + id}
                                 value={relation.horse.id}

@@ -9,6 +9,7 @@ import com.example.server.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,7 @@ public class BetService {
     }
 
 
+    @Transactional
     public void addBet(BetId betId, String amount) {
         Optional<Bet> bet = betRepository.findById(betId);
         Optional<HorseInRace> horseInRace = horseInRaceRepository.findById(betId.getHorseInRaceId());
@@ -54,9 +56,10 @@ public class BetService {
         }
         try {
             var newAmount = Float.parseFloat(amount);
+            player.get().setBalance(player.get().getBalance() - newAmount);
             betRepository.save(new Bet(betId, horseInRace.get(), player.get(), newAmount));
         } catch (RuntimeException e) {
-            throw new RuntimeException("Cannot convert amount to float: " + e);
+            throw new RuntimeException("Problem occurred: " + e);
         }
     }
 }

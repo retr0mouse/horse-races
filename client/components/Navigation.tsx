@@ -72,7 +72,7 @@ export function Navigation(): ReactElement {
                         }
                         to="/create_race"
                     >
-                        Create race
+                        Create a race
                     </NavLink>
                 </ListItem>
                 <ListItem>
@@ -83,6 +83,26 @@ export function Navigation(): ReactElement {
                         to="/bet"
                     >
                         Bet
+                    </NavLink>
+                </ListItem>
+                <ListItem>
+                    <NavLink
+                        className={
+                            ({ isActive }) => isActive ? activeClassName : undefined
+                        }
+                        to="/raceStart"
+                    >
+                        Start a race
+                    </NavLink>
+                </ListItem>
+                <ListItem>
+                    <NavLink
+                        className={
+                            ({ isActive }) => isActive ? activeClassName : undefined
+                        }
+                        to="/results"
+                    >
+                        results
                     </NavLink>
                 </ListItem>
             </UnorderedList>
