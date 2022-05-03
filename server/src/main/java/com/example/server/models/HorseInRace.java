@@ -4,6 +4,8 @@ import com.example.server.keys.HorseInRaceId;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity (name = "HorseInRace")
 @Table (name = "horse_in_race")
@@ -23,6 +25,30 @@ public class HorseInRace {
 
     public HorseInRaceId getId() {
         return id;
+    }
+
+    @OneToMany (
+            mappedBy = "horseInRace",
+            cascade = CascadeType.ALL
+    )
+    private List<Bet> bets = new ArrayList<>();
+
+    public void addBet(Bet bet) {
+        if (!bets.contains(bet)) {
+            bets.add(bet);
+        }
+    }
+
+    public void removeBet(Bet bet) {
+        bets.remove(bet);
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
     }
 
     public void setId(HorseInRaceId id) {

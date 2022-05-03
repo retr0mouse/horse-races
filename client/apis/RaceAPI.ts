@@ -69,7 +69,6 @@ export class RaceAPI {
             throw new Error(error.message);
         }
         const horses = await response.json() as Horse;
-        console.log(horses);
         return horses;
     }
 

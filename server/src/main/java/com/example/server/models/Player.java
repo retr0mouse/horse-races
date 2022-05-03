@@ -93,6 +93,30 @@ public class Player {
     )
     private List<Race> races = new ArrayList<>();
 
+    @OneToMany (
+            mappedBy = "player",
+            cascade = CascadeType.ALL
+    )
+    private List<Bet> bets = new ArrayList<>();
+
+    public void addBet(Bet bet) {
+        if (!bets.contains(bet)) {
+            bets.add(bet);
+        }
+    }
+
+    public void removeBet(Bet bet) {
+        bets.remove(bet);
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
+    }
+
     public void addRace(Race race) {
         if (!this.races.contains(race)) {
             this.races.add(race);
