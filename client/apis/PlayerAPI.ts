@@ -1,4 +1,4 @@
-import { ResponseError } from "../errors/ResponseError";
+import { ResponseError } from "../responses/ApiError";
 import { ResponsePlayer } from "./AuthAPI";
 
 export class PlayerAPI {

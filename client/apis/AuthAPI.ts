@@ -1,4 +1,4 @@
-import { ResponseError } from "../errors/ResponseError";
+import { ResponseError } from "../responses/ApiError";
 
 export class AuthAPI {
     static async registerPlayer(username: string, firstname: string, lastname: string,  email: string, password: string, balance: number, winnings: number) {
