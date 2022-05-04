@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Navigation } from "./components/Navigation";
 import { BetPage } from "./pages/BetPage";
 import { CreateRacePage } from "./pages/CreateRacePage";
-import { Home } from "./pages/Home";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { ResultsPage } from "./pages/ResultsPage";
@@ -21,7 +20,6 @@ export default function App() {
             <BodyContainer>
             <Navigation/>
             <Routes>
-                <Route path="/" element={<Home/>}></Route>
                 <Route path="/login" element={<LoginPage/>}></Route>
                 <Route path="/registration" element={<RegisterPage/>}></Route>
                 <Route path="/create_race" element={<CreateRacePage/>}></Route>
