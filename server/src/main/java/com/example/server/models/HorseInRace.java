@@ -96,4 +96,15 @@ public class HorseInRace {
         this.horse = horse;
         this.race = race;
     }
+
+    @Override
+    public String toString() {
+        return "HorseInRace{" +
+                "id=" + id +
+                ", horse=" + horse +
+                ", race=" + race +
+                ", position=" + position +
+                ", bets=" + bets +
+                '}';
+    }
 }

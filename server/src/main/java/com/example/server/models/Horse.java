@@ -95,4 +95,13 @@ public class Horse {
         this.name = name;
         this.color = color;
     }
+
+    @Override
+    public String toString() {
+        return "Horse{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                '}';
+    }
 }

@@ -7,6 +7,7 @@ import { CreateRacePage } from "./pages/CreateRacePage";
 import { Home } from "./pages/Home";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
+import { ResultsPage } from "./pages/ResultsPage";
 import { StartRacePage } from "./pages/StartRacePage";
 
 const BodyContainer = styled.div`
@@ -26,6 +27,7 @@ export default function App() {
                 <Route path="/create_race" element={<CreateRacePage/>}></Route>
                 <Route path="/bet" element={<BetPage/>}></Route>
                 <Route path="/raceStart" element={<StartRacePage/>}></Route>
+                <Route path="/results" element={<ResultsPage/>}></Route>
             </Routes>
         </BodyContainer>
         </>

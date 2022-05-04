@@ -102,7 +102,7 @@ export function Navigation(): ReactElement {
                         }
                         to="/results"
                     >
-                        results
+                        Race results
                     </NavLink>
                 </ListItem>
             </UnorderedList>

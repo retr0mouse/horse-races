@@ -42,7 +42,7 @@ export function BetPage(): ReactElement {
     async function fetchRaces() {
         const playerId = (await PlayerAPI.getPlayer()).id;
         try {
-            const racesList = await RaceAPI.getRaces(playerId);
+            const racesList = await RaceAPI.getRacesByCreator(playerId);
             setRaces(racesList);
         } catch (error) {
             return;

@@ -24,7 +24,7 @@ export class RaceAPI {
         }
     }
 
-    static async getRaces(id: number) {
+    static async getRacesByCreator(id: number) {
         const token = sessionStorage.getItem("token");
         const response = await fetch(`http://localhost:8080/api/v1/race/get?creatorId=${id}`, {
             headers: {
@@ -36,7 +36,23 @@ export class RaceAPI {
             const error = await response.json() as ResponseError;
             throw new Error(error.message);
         }
-        const races = await response.json() as Race;
+        const races = await response.json() as Race[];
+        return races;
+    }
+
+    static async getAllRaces(): Promise<Race[]> {
+        const token = sessionStorage.getItem("token");
+        const response = await fetch(`http://localhost:8080/api/v1/race/get`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        });
+        if (!response.ok) {
+            const error = await response.json() as ResponseError;
+            throw new Error(error.message);
+        }
+        const races = await response.json() as Race[];
         return races;
     }
 

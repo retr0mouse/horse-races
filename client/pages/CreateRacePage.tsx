@@ -92,10 +92,9 @@ export function CreateRacePage() {
     }
 
     async function fetchRaces() {
-        await HorseAPI.getHorses();
         const playerId = (await PlayerAPI.getPlayer()).id;
         try {
-            const racesList = await RaceAPI.getRaces(playerId);
+            const racesList = await RaceAPI.getRacesByCreator(playerId);
             setRaces(racesList);
         } catch (error) {
             return;
@@ -106,7 +105,6 @@ export function CreateRacePage() {
         if (selectedRaceId != "") {
             try {
                 const horses = await RaceAPI.getAvailableHorses(races[selectedRaceId]?.id);
-                // console.log("keka");
                 setHorses(horses);
             } catch (error) {
                 return;

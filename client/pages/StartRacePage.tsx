@@ -40,7 +40,7 @@ export function StartRacePage(): ReactElement {
         await HorseAPI.getHorses();
         const playerId = (await PlayerAPI.getPlayer()).id;
         try {
-            const racesList = await RaceAPI.getRaces(playerId);
+            const racesList = await RaceAPI.getRacesByCreator(playerId);
             setRaces(racesList);
         } catch (error) {
             return;
@@ -53,7 +53,6 @@ export function StartRacePage(): ReactElement {
             let indexes = Array.from(Array(race.horseInRaces.length).keys())
             indexes = shuffleArray(indexes);
             for (let i = 0; i < indexes.length; i++) {
-                console.log(race.horseInRaces[i].horse.id, race.id, indexes[i]);
                 await HorseAPI.addPosition(race.horseInRaces[i].horse.id, race.id, indexes[i] + 1);                
             }
         }
