@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { UserSummary } from "./UserSummary";
 
 let activeClassName = "current"
 
@@ -40,26 +39,6 @@ export function Navigation(): ReactElement {
                         className={
                             ({ isActive }) => isActive ? activeClassName : undefined
                         }
-                        to="/"
-                    >
-                        Home
-                    </NavLink>
-                </ListItem>
-                <ListItem>
-                    <NavLink
-                        className={
-                            ({ isActive }) => isActive ? activeClassName : undefined
-                        }
-                        to="/login"
-                    >
-                        Login page
-                    </NavLink>
-                </ListItem>
-                <ListItem>
-                    <NavLink
-                        className={
-                            ({ isActive }) => isActive ? activeClassName : undefined
-                        }
                         to="/registration"
                     >
                         Registration page
@@ -72,7 +51,7 @@ export function Navigation(): ReactElement {
                         }
                         to="/create_race"
                     >
-                        Create a race
+                        Races
                     </NavLink>
                 </ListItem>
                 <ListItem>

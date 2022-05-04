@@ -1,9 +1,11 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { HorseAPI } from "../apis/HorseAPI";
 import { PlayerAPI } from "../apis/PlayerAPI";
-import { HorseInRace, Race, RaceAPI } from "../apis/RaceAPI";
+import { Race, RaceAPI } from "../apis/RaceAPI";
 import { Message } from "../components/Message";
 import { Races } from "../components/Races";
+import { SignOutButton } from "../components/SignOutButton";
+import { LoginPage } from "./LoginPage";
 
 export function StartRacePage(): ReactElement {
     const [races, setRaces] = useState() as any;
@@ -25,14 +27,18 @@ export function StartRacePage(): ReactElement {
     
     return (
         <>
-            <Races
-                onClicked={(raceId) => startARace(raceId)}
-                items={races}
-                buttonTitle="Start this race"
-            ></Races>
-            <Message
-                message={notice}
-            ></Message>
+            {sessionStorage.getItem("token")?
+            <div>
+                <Races
+                    onClicked={(raceId) => startARace(raceId)}
+                    items={races}
+                    buttonTitle="Start this race"
+                ></Races>
+                <Message
+                    message={notice}
+                ></Message>
+                <SignOutButton/>
+            </div>:<LoginPage></LoginPage>}
         </>
     );
 

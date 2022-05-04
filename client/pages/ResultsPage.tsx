@@ -1,8 +1,8 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { HorseAPI } from "../apis/HorseAPI";
-import { PlayerAPI } from "../apis/PlayerAPI";
 import { RaceAPI } from "../apis/RaceAPI";
 import { Results } from "../components/Results";
+import { SignOutButton } from "../components/SignOutButton";
+import { LoginPage } from "./LoginPage";
 
 export function ResultsPage(): ReactElement {
     const [races, setRaces] = useState([]) as any;
@@ -24,9 +24,13 @@ export function ResultsPage(): ReactElement {
 
     return (
         <>
-            <Results
-                items={races}
-            ></Results>
+            {sessionStorage.getItem("token")?
+            <div>
+                <Results
+                    items={races}
+                ></Results>
+                <SignOutButton/>
+            </div>:<LoginPage></LoginPage>}
         </>
     ); 
 
