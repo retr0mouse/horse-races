@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RegisterInput } from "../components/RegisterInput";
 import styled from "styled-components";
 import { AuthAPI } from "../apis/AuthAPI";
@@ -64,15 +64,15 @@ export function RegisterPage() {
     const [winnings, setWinnings] = useState() as any;
     const [notice, setNotice] = useState("") as any;
     
-    // useEffect(() => {
-    //     if (!notice) {
-    //         return;
-    //     }
-    //     const timeout = setTimeout(() => setNotice(""), 2000);
-    //     return () => {
-    //         clearTimeout(timeout);
-    //     };
-    // }, [notice])
+    useEffect(() => {
+        if (!notice) {
+            return;
+        }
+        const timeout = setTimeout(() => setNotice(""), 2000);
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [notice])
 
     return (
         <RegisterContainer>

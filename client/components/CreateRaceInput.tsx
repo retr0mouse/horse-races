@@ -20,7 +20,7 @@ const Input = styled.div`
         border-radius: 5px;
         margin: 10px 10px 5px 0;
     }
-    
+
     button {
         margin-top: 10px;
         width: 150px;

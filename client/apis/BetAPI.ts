@@ -32,7 +32,6 @@ export class BetAPI {
         }
         else {
             throw new Error("Not enough money on account");
-        }
-        
+        }        
     }
 }

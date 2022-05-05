@@ -34,9 +34,4 @@ public class HorseInRaceController {
                             @RequestParam Integer placement) {
         horseInRaceService.addPosition(horseId, raceId, placement);
     }
-
-//    @DeleteMapping(path = "{horseId}/{raceId}")
-//    public void deleteHorseInRace(@PathVariable("horseId") Long horseId, @PathVariable("raceId") Long raceId) {
-//        horseInRaceService.deleteHorseInRace(horseId, raceId);
-//    }
 }

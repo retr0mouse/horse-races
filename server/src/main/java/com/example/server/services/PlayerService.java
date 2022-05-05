@@ -28,25 +28,6 @@ public class PlayerService {
                 ));
     }
 
-//    public Player getPlayerByUsernameAndPassword(String username, String password) {
-//        return playerRepository.findPlayerByUsernameAndPassword(username, password)
-//                .orElseThrow(() -> new IllegalStateException(
-//                        "Credentials are wrong"
-//                ));
-//    }
-
-//    public void addPlayer(Player player) {
-//        var playerOptional = playerRepository.findPlayerByUsername(player.getUsername());
-//        if (playerOptional.isPresent()) {
-//            throw new IllegalStateException("Username " + player.getUsername() + " is already in use");
-//        }
-//        playerOptional = playerRepository.findPlayerByEmail(player.getEmail());
-//        if (playerOptional.isPresent()) {
-//            throw new IllegalStateException("Email " + player.getEmail() + " is already in use");
-//        }
-//        playerRepository.save(player);
-//    }
-
     public void deletePlayer(Long id) {
         playerRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "Player with id (" + id + ") does not exist"

@@ -15,7 +15,6 @@ export function Results(props: Props): ReactElement {
     return (
         <>
             {props.items?.map((race: Race) => {
-                {console.log(race.horseInRaces.sort())}
                 return (
                     <Container>
                         <h1>{race.place} {race.date}</h1>
