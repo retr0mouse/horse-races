@@ -1,7 +1,4 @@
 import React, { ReactElement, useState } from "react";
-import styled from "styled-components";
-
-
 
 interface Props {
     onUsernameTyped(text: any): void;
@@ -58,7 +55,7 @@ export function RegisterInput(props: Props): ReactElement {
             </div>
             
             <div className="input-container">
-                <input name="password" type="text" placeholder="password" onChange={(event) => {
+                <input name="password" type="password" placeholder="password" onChange={(event) => {
                     props.onPasswordTyped(event);
                     setPasswordMessage(typeof event?.target.value === "undefined" || event?.target.value.length == 0 ? "please provide a password" : "");
                 }}/>
@@ -68,7 +65,7 @@ export function RegisterInput(props: Props): ReactElement {
             <div className="input-container">
                 <input name="balance" type="text" placeholder="balance" onChange={(event) => {
                     props.onBalanceTyped(event);
-                    setBalanceMessage(typeof event?.target.value === "undefined" || event?.target.value.length == 0 ? "please provide a balance" : "");
+                    setBalanceMessage(typeof event?.target.value === "undefined" || event?.target.value.length == 0 ? "please provide a starting balance" : "");
                 }}/>
                 <label htmlFor="balance">{balanceMessage}</label>
             </div>
@@ -76,11 +73,10 @@ export function RegisterInput(props: Props): ReactElement {
             <div className="input-container">
                 <input name="winnings" type="text" placeholder="winnings" onChange={(event) => {
                     props.onWinningsTyped(event);
-                    setWinningsMessage(typeof event?.target.value === "undefined" || event?.target.value.length == 0 ? "please provide a winnings" : "");
+                    setWinningsMessage(typeof event?.target.value === "undefined" || event?.target.value.length == 0 ? "please provide a number of winnings" : "");
                 }}/>
                 <label htmlFor="winnings">{winningsMessage}</label>
             </div>
-
             <button onClick={(credentials) => props.onClicked(credentials)}>Register</button>
         </>
     );

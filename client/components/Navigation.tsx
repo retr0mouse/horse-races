@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { UserSummary } from "./UserSummary";
 
 let activeClassName = "current"
 
@@ -40,30 +39,50 @@ export function Navigation(): ReactElement {
                         className={
                             ({ isActive }) => isActive ? activeClassName : undefined
                         }
-                        to="/">
-                        Home
-                    </NavLink>
-                </ListItem>
-                <ListItem>
-                    <NavLink
-                        className={
-                            ({ isActive }) => isActive ? activeClassName : undefined
-                        }
-                        to="/login">
-                        Login page
-                    </NavLink>
-                </ListItem>
-                <ListItem>
-                    <NavLink
-                        className={
-                            ({ isActive }) => isActive ? activeClassName : undefined
-                        }
-                        to="/registration">
+                        to="/registration"
+                    >
                         Registration page
                     </NavLink>
                 </ListItem>
                 <ListItem>
-                    <UserSummary/>
+                    <NavLink
+                        className={
+                            ({ isActive }) => isActive ? activeClassName : undefined
+                        }
+                        to="/create_race"
+                    >
+                        Races
+                    </NavLink>
+                </ListItem>
+                <ListItem>
+                    <NavLink
+                        className={
+                            ({ isActive }) => isActive ? activeClassName : undefined
+                        }
+                        to="/bet"
+                    >
+                        Bet
+                    </NavLink>
+                </ListItem>
+                <ListItem>
+                    <NavLink
+                        className={
+                            ({ isActive }) => isActive ? activeClassName : undefined
+                        }
+                        to="/raceStart"
+                    >
+                        Start a race
+                    </NavLink>
+                </ListItem>
+                <ListItem>
+                    <NavLink
+                        className={
+                            ({ isActive }) => isActive ? activeClassName : undefined
+                        }
+                        to="/results"
+                    >
+                        Race results
+                    </NavLink>
                 </ListItem>
             </UnorderedList>
         </nav>

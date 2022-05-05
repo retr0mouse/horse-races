@@ -1,5 +1,6 @@
-package com.example.server.player;
+package com.example.server.repositories;
 
+import com.example.server.models.Player;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +10,6 @@ import java.util.Optional;
 public interface PlayerRepository extends JpaRepository<Player, Long> {
     Optional<Player> findPlayerByUsername(String username);
     Optional<Player> findPlayerByEmail(String email);
-    Optional<Player> findPlayerByUsernameAndPassword(String username, String password);
+    Boolean existsByUsername(String username);
+    Boolean existsByEmail(String email);
 }

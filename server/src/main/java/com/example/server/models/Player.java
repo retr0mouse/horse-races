@@ -1,10 +1,20 @@
-package com.example.server.player;
+package com.example.server.models;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity (name = "Player")
-@Table (name = "player")
+@Table (
+        name = "player",
+        uniqueConstraints = {
+                @UniqueConstraint(name="username_unique", columnNames = "username"),
+                @UniqueConstraint(name="email_unique", columnNames = "email")
+        })
 public class Player {
     @Id
     @SequenceGenerator (
@@ -13,7 +23,7 @@ public class Player {
             allocationSize = 1
     )
     @GeneratedValue (
-            strategy = GenerationType.AUTO,
+            strategy = GenerationType.IDENTITY,
             generator = "player_sequence"
     )
     @Column (
@@ -64,6 +74,63 @@ public class Player {
     )
     private int winnings;
 
+    @ManyToMany (fetch = FetchType.EAGER)   // with lazy type authorization didn't work
+    @JoinTable (
+            name = "player_to_role",
+            joinColumns = @JoinColumn(
+                    name = "player_id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id"
+            )
+    )
+    private Set<Role> roles = new HashSet<>();
+
+    @OneToMany (
+            mappedBy = "creator",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Race> races = new ArrayList<>();
+
+    @OneToMany (
+            mappedBy = "player",
+            cascade = CascadeType.ALL
+    )
+    private List<Bet> bets = new ArrayList<>();
+
+    public void addBet(Bet bet) {
+        if (!bets.contains(bet)) {
+            bets.add(bet);
+        }
+    }
+
+    public void removeBet(Bet bet) {
+        bets.remove(bet);
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
+    }
+
+    public void addRace(Race race) {
+        if (!this.races.contains(race)) {
+            this.races.add(race);
+            race.setCreator(this);
+        }
+    }
+
+    public void removeRace(Race race) {
+        if (!this.races.contains(race)) {
+            this.races.remove(race);
+            race.setCreator(null);
+        }
+    }
+
     public Player() {
     }
 
@@ -85,6 +152,14 @@ public class Player {
         this.password = password;
         this.balance = balance;
         this.winnings = winnings;
+    }
+
+    public List<Race> getRaces() {
+        return races;
+    }
+
+    public void setRaces(List<Race> races) {
+        this.races = races;
     }
 
     public Long getId() {
@@ -149,5 +224,13 @@ public class Player {
 
     public void setWinnings(int winnings) {
         this.winnings = winnings;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
