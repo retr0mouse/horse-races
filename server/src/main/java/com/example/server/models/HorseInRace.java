@@ -23,7 +23,10 @@ public class HorseInRace {
     @JoinColumn(name = "race_id")
     private Race race;
 
-    @Column (name = "position")
+    @Column (
+            name = "position",
+            nullable = false
+    )
     private Integer position;
 
     public Integer getPosition() {
@@ -91,10 +94,11 @@ public class HorseInRace {
         this.race = race;
     }
 
-    public HorseInRace(HorseInRaceId id, Horse horse, Race race) {
+    public HorseInRace(HorseInRaceId id, Horse horse, Race race, Integer position) {
         this.id = id;
         this.horse = horse;
         this.race = race;
+        this.position = position;
     }
 
     @Override

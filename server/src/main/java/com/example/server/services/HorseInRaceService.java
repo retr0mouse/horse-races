@@ -52,7 +52,8 @@ public class HorseInRaceService {
         horseInRaceRepository.save(new HorseInRace(
                 new HorseInRaceId(horseInRaceId.getHorseId(), horseInRaceId.getRaceId()),
                 horse.get(),
-                race.get())
+                race.get(),
+                0)
         );
     }
 
@@ -67,6 +68,9 @@ public class HorseInRaceService {
             if (placement == 1) {
                 payThePlayers(horseInRace);
             }
+        }
+        else {
+            horseInRace.setPosition(0);
         }
     }
 

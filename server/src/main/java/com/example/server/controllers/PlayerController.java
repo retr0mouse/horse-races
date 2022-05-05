@@ -37,6 +37,11 @@ public class PlayerController {
         return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
+    @GetMapping("getBalance")
+    public double getPlayerBalance(@RequestParam Long id) {
+        return playerService.getBalance(id);
+    }
+
     @GetMapping(value = "get", params = "username")
     public UserDetails getPlayerByUsername(@RequestParam String username) {
         return playerDetailsService.loadUserByUsername(username);

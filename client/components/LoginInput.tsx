@@ -1,5 +1,4 @@
 import React, { ReactElement, useState } from "react";
-import styled from "styled-components";
 
 interface Props {
     onClicked(query: any): void;
@@ -24,7 +23,7 @@ export function LoginInput(props: Props): ReactElement {
                 setPasswordMessage(event?.target.value.length == 0 ? "please provide a password" : "");
             }}/>
             <label htmlFor="password">{passwordMessage}</label>
-            <button onClick={(credentials) => props.onClicked(credentials)}>GO!</button>
+            <button onClick={(credentials) => props.onClicked(credentials)}>Submit</button>
         </>
     );
 }

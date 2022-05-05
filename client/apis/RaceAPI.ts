@@ -123,7 +123,7 @@ export interface Race {
 export interface HorseInRace {
   id: Id;
   horse: Horse;
-  position?: number;
+  position: number;
   bets: Bet[];
 }
 

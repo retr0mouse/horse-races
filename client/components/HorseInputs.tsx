@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Horse } from "../apis/RaceAPI";
 
 const Background = styled.div`
+    position: sticky;
     z-index: 1;
     background-color: #a7a3a390;
     position: absolute;
@@ -11,6 +12,50 @@ const Background = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    
+    button {
+        margin-top: 10px;
+        width: 150px;
+        height: 30px;
+        align-self: center;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 700;
+        border: none;
+        background-color: #26B259;
+        color: white;
+    }
+
+    button:hover {
+        background-color: #26b259d3;
+        cursor: pointer;
+    }
+
+    label {
+        color: red;
+        font-size: 10px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .close {
+        z-index: 2;
+        position: absolute;
+        top: 10%;
+        right: 15%;
+        border-radius: 10px;
+        border: none;
+        color: white;
+        font-size: 25px;
+        background-color: red;
+        border-radius: 50%;
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+    }
+
+    .close:hover {
+        background-color: #ff0000bf;
+    }
 `;
 
 const Field = styled.div`
@@ -38,19 +83,6 @@ const Field = styled.div`
         display: flex;
         flex-direction: column;
     }
-`;
-
-const CloseButton = styled.button`
-    z-index: 2;
-    position: absolute;
-    top: 15%;
-    right: 15%;
-    border-radius: 10px;
-    border: none;
-    color: black;
-    font-size: 25px;
-    background: none;
-    cursor: pointer;
 `;
 
 interface Props {
@@ -102,7 +134,7 @@ export function HorseInputs(props: Props): ReactElement {
                     <button onClick={() => props.onClickedAdd()}>Add</button>
                 </div>
             </Field>
-            <CloseButton onClick={() => props.onClickedClose()}>x</CloseButton>
+            <button className="close" onClick={() => props.onClickedClose()}>x</button>
         </Background>
     );
 }

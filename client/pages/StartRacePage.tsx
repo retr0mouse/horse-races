@@ -1,18 +1,32 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import styled from "styled-components";
 import { HorseAPI } from "../apis/HorseAPI";
 import { PlayerAPI } from "../apis/PlayerAPI";
 import { Race, RaceAPI } from "../apis/RaceAPI";
 import { Message } from "../components/Message";
 import { Races } from "../components/Races";
-import { SignOutButton } from "../components/SignOutButton";
+import { SignOutButton } from "../components/UserInfo";
 import { LoginPage } from "./LoginPage";
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    background-color: #80808016;
+    padding: 25px;
+    border-radius: 15px;
+    font-family: 'Poppins', sans-serif;
+    width: min-content;
+`;
 
 export function StartRacePage(): ReactElement {
     const [races, setRaces] = useState() as any;
     const [notice, setNotice] = useState("") as any;
     
     useEffect(() => {
-        fetchRaces();
+        if (sessionStorage.getItem('token')) {
+            fetchRaces();
+        }
     }, ["",  notice])
 
     useEffect(() => {
@@ -28,7 +42,7 @@ export function StartRacePage(): ReactElement {
     return (
         <>
             {sessionStorage.getItem("token")?
-            <div>
+            <Container>
                 <Races
                     onClicked={(raceId) => startARace(raceId)}
                     items={races}
@@ -38,13 +52,13 @@ export function StartRacePage(): ReactElement {
                     message={notice}
                 ></Message>
                 <SignOutButton/>
-            </div>:<LoginPage></LoginPage>}
+            </Container>:<LoginPage></LoginPage>}
         </>
     );
 
     async function fetchRaces() {
         await HorseAPI.getHorses();
-        const playerId = (await PlayerAPI.getPlayer()).id;
+        const playerId = (await PlayerAPI.getByToken()).id;
         try {
             const racesList = await RaceAPI.getRacesByCreator(playerId);
             setRaces(racesList);
@@ -56,11 +70,17 @@ export function StartRacePage(): ReactElement {
     async function startARace(raceId: number) {
         const race = races[raceId] as Race;
         if (race.horseInRaces.length > 0) {
-            let indexes = Array.from(Array(race.horseInRaces.length).keys())
-            indexes = shuffleArray(indexes);
-            for (let i = 0; i < indexes.length; i++) {
-                await HorseAPI.addPosition(race.horseInRaces[i].horse.id, race.id, indexes[i] + 1);                
+            try {
+                let indexes = Array.from(Array(race.horseInRaces.length).keys())
+                indexes = shuffleArray(indexes);
+                for (let i = 0; i < indexes.length; i++) {
+                    await HorseAPI.addPosition(race.horseInRaces[i].horse.id, race.id, indexes[i] + 1);                
+                }
+                setNotice("Race started sucessfully!")
+            } catch (error) {
+                setNotice("Race start " + error);
             }
+            
         }
     }
 

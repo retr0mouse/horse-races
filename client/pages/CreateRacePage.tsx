@@ -7,8 +7,20 @@ import { CreateRaceInput } from "../components/CreateRaceInput";
 import { HorseInputs } from "../components/HorseInputs";
 import { Message } from "../components/Message";
 import { Races } from "../components/Races";
-import { SignOutButton } from "../components/SignOutButton";
+import { SignOutButton } from "../components/UserInfo";
 import { LoginPage } from "./LoginPage";
+import styled from "styled-components";
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    background-color: #80808016;
+    padding: 25px;
+    border-radius: 15px;
+    font-family: 'Poppins', sans-serif;
+    width: min-content;
+`;
 
 export function CreateRacePage() {
     const [racePlace, setRacePlace] = useState("") as any;
@@ -23,8 +35,10 @@ export function CreateRacePage() {
     const [selectedRaceId, setSelectedRaceId] = useState() as any;
 
     useEffect(() => {
-        fetchRaces();
-    }, ["",  notice])
+        if (sessionStorage.getItem("token")) {
+            fetchRaces();
+        }
+    }, [notice])
 
     useEffect(() => {
         if (!notice) {
@@ -37,13 +51,15 @@ export function CreateRacePage() {
     }, [notice])
 
     useEffect(() => {
-        fetchHorses();
+        if (sessionStorage.getItem("token")) {
+            fetchHorses();
+        }
     }, [showHorseInput])
 
     return (
         <>
             {sessionStorage.getItem("token")?
-            <div>
+            <Container>
                 <CreateRaceInput
                     onPlaceTyped={(event) => setRacePlace(event?.target.value)}
                     onDateEntered={(event) => setRaceDate(event?.target.value)}
@@ -76,15 +92,15 @@ export function CreateRacePage() {
                     onHorseSelected={(horseId) => setSelectedHorseId(horseId)}
                 ></HorseInputs>:null}
                 <SignOutButton/>
-            </div>:<LoginPage></LoginPage>}
+            </Container>:<LoginPage></LoginPage>}
             
         </>
     );
 
     async function addRace() {
-        if (racePlace != '' && raceDate != '') {
+        if (racePlace !== '' && raceDate !== '') {
             try {
-                const player = await PlayerAPI.getPlayer() as ResponsePlayer;
+                const player = await PlayerAPI.getByToken() as ResponsePlayer;
                 await RaceAPI.createRace(racePlace, raceDate, player.username);
             } catch (error) {
                 setNotice("Creation " + error);
@@ -92,11 +108,14 @@ export function CreateRacePage() {
             }
             setNotice("👍");
         }
+        else {
+            setNotice("Please provide the needed data");
+        }
         return;
     }
 
     async function fetchRaces() {
-        const playerId = (await PlayerAPI.getPlayer()).id;
+        const playerId = (await PlayerAPI.getByToken()).id;
         try {
             const racesList = await RaceAPI.getRacesByCreator(playerId);
             setRaces(racesList);
@@ -117,7 +136,7 @@ export function CreateRacePage() {
     }
 
     async function createHorse() {
-        if (horseName != "" && horseColor != "") {
+        if (horseName !== "" && horseColor !== "") {
             try {
                 await HorseAPI.createHorse(horseName, horseColor);
             } catch(error) {
@@ -125,13 +144,16 @@ export function CreateRacePage() {
                 setNotice("Horse creation " + error)
                 return;
             }
-            setNotice("👍");
+            setNotice("Horse created successfully");
             return; 
+        }
+        else {
+            setNotice("Please provide the needed data");
         }
     }
 
     async function addHorseToRace(raceId: number, horseId: number) {
-        if (raceId != undefined && horseId != undefined) {
+        if (raceId !== undefined && horseId !== undefined) {
             try {
                 await RaceAPI.addHorseToRace(raceId, horseId);
             } catch(error) {
@@ -139,8 +161,11 @@ export function CreateRacePage() {
                 setNotice("Horse in race adding " + error)
                 return;
             }
-            setNotice("👍");
+            setNotice("Horse added to race successfully");
             return; 
+        }
+        else {
+            setNotice("Please provide the needed data");
         }
     }
 }

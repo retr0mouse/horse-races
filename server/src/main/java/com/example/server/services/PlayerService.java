@@ -86,4 +86,12 @@ public class PlayerService {
         }
         playerRepository.save(player);
     }
+
+    public double getBalance(Long id) {
+        var player = playerRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Player with id (" + id + ") does not exist"
+                ));
+        return player.getBalance();
+    }
 }

@@ -1,12 +1,31 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import styled from "styled-components";
 import { ResponsePlayer } from "../apis/AuthAPI";
 import { BetAPI } from "../apis/BetAPI";
 import { PlayerAPI } from "../apis/PlayerAPI";
 import { RaceAPI } from "../apis/RaceAPI";
 import { HorsesToBetOn } from "../components/HorsesToBetOn";
 import { Message } from "../components/Message";
-import { SignOutButton } from "../components/SignOutButton";
+import { SignOutButton } from "../components/UserInfo";
 import { LoginPage } from "./LoginPage";
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    background-color: #80808016;
+    padding: 25px;
+    border-radius: 15px;
+    font-family: 'Poppins', sans-serif;
+    width: min-content;
+`;
+
+const ItemsContainer = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 500px;
+`;
 
 export function BetPage(): ReactElement {
     const [races, setRaces] = useState([]) as any;
@@ -16,7 +35,9 @@ export function BetPage(): ReactElement {
     const [playerId, setPlayerId] = useState(0) as any;
 
     useEffect(() => {
-        fetchRaces();
+        if (sessionStorage.getItem('token')) {
+            fetchRaces();
+        }
     }, ["", notice]);
 
     useEffect(() => {
@@ -30,13 +51,16 @@ export function BetPage(): ReactElement {
     }, [notice])
 
     useEffect(() => {
-        getPlayer();
+        if (sessionStorage.getItem('token')) {
+            getPlayer();
+        }
     }, [])
 
     return (
         <>
             {sessionStorage.getItem("token")? 
-            <div>
+            <Container>
+                <h1>Races to bet in</h1>
                 <HorsesToBetOn
                     playerId={playerId}
                     races={races}
@@ -48,12 +72,12 @@ export function BetPage(): ReactElement {
                     message={notice}
                 />
                 <SignOutButton/>
-            </div>:<LoginPage></LoginPage>}
+            </Container>:<LoginPage></LoginPage>}
         </>
     );
 
     async function fetchRaces() {
-        const playerId = (await PlayerAPI.getPlayer()).id;
+        const playerId = (await PlayerAPI.getByToken()).id;
         try {
             const racesList = await RaceAPI.getRacesByCreator(playerId);
             setRaces(racesList);
@@ -79,6 +103,6 @@ export function BetPage(): ReactElement {
     }
 
     async function getPlayer() {
-        setPlayerId((await PlayerAPI.getPlayer()).id);
+        setPlayerId((await PlayerAPI.getByToken()).id);
     }
 }
