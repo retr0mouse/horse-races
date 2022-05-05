@@ -68,6 +68,7 @@ export function HorsesToBetOn(props: Props): ReactElement {
     return(
         <Container>
             {props.races?.map((race: Race, index) => {
+                {console.log(race.horseInRaces.map(relation => relation.bets.map(bet => bet.amount)))}
                 return race.horseInRaces.length > 0 ? (
                 <Horse
                     key={index}
