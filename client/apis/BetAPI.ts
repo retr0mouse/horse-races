@@ -9,7 +9,7 @@ export class BetAPI {
         }
         const player = await PlayerAPI.getByToken();
         const balance = await PlayerAPI.getBalance(player.id) - amount;
-        if (balance > 0) {
+        if (balance >= 0) {
             const data = {
                 playerId: player.id,
                 horseInRaceId: {
