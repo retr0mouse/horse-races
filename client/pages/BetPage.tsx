@@ -77,9 +77,8 @@ export function BetPage(): ReactElement {
     );
 
     async function fetchRaces() {
-        const playerId = (await PlayerAPI.getByToken()).id;
         try {
-            const racesList = await RaceAPI.getRacesByCreator(playerId);
+            const racesList = await RaceAPI.getAllRaces();
             setRaces(racesList);
         } catch (error) {
             return;

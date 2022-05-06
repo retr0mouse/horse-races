@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -93,27 +94,62 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-            roles.add(userRole);
+//            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+//                    .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+            Optional<Role> userRole = roleRepository.findByName(ERole.ROLE_USER);
+            if (userRole.isPresent()) {
+                roles.add(userRole.get());
+            }
+            else {
+                var role = new Role(ERole.ROLE_USER);
+                roleRepository.save(role);
+                roles.add(role);
+            }
         }
         else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-                        roles.add(adminRole);
+//                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+//                        roles.add(adminRole);
+                        Optional<Role> userRole = roleRepository.findByName(ERole.ROLE_ADMIN);
+                        if (userRole.isPresent()) {
+                            roles.add(userRole.get());
+                        }
+                        else {
+                            var roleAdmin = new Role(ERole.ROLE_ADMIN);
+                            roleRepository.save(roleAdmin);
+                            roles.add(roleAdmin);
+                        }
                         break;
                     case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-                        roles.add(modRole);
+//                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+//                        roles.add(modRole);
+                        Optional<Role> userRole1 = roleRepository.findByName(ERole.ROLE_MODERATOR);
+                        if (userRole1.isPresent()) {
+                            roles.add(userRole1.get());
+                        }
+                        else {
+                            var roleModerator = new Role(ERole.ROLE_MODERATOR);
+                            roleRepository.save(roleModerator);
+                            roles.add(roleModerator);
+                        }
                         break;
                     default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-                        roles.add(userRole);
+//                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+//                        roles.add(userRole);
+                        Optional<Role> userRole2 = roleRepository.findByName(ERole.ROLE_USER);
+                        if (userRole2.isPresent()) {
+                            roles.add(userRole2.get());
+                        }
+                        else {
+                            var roleAdmin = new Role(ERole.ROLE_USER);
+                            roleRepository.save(roleAdmin);
+                            roles.add(roleAdmin);
+                        }
                 }
             });
         }
