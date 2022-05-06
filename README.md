@@ -10,7 +10,7 @@ An example of application.properties file, which is also present in this reposit
 
 Link to the app on heroku: [https://horse-races-frontend.herokuapp.com/]
 
-Heroku app has one crucial difference: the page refresh does not work anywhere except the starting page, because of the React's single page architecture (I use React-Router to imitate a multi-page application). This means that the result of some buttons may not be visible, but choosing the different page on the navigation bar fixes it. The local version does not have this issue, because I use window.location.reload() in two places where I need the page to refresh manually. Since I learned about this only when I was deploying the application to Heroku (1 day before the deadline), I couldn't fixed the problem yet, but I assume this will not take me very long.
+Heroku app has one crucial difference: the page refresh does not work anywhere except the starting page, because of the React's single page architecture (I use React-Router to imitate a multi-page application). This means that the result of some buttons may not be visible, but choosing the different page on the navigation bar fixes it. The local version does not have this issue, because I use window.location.reload() in two places where I need the page to refresh manually. Since I learned about this only when I was deploying the application to Heroku, I didn't have time to fix the problem, but I assume this will not take me very long.
 
 From the technical side of the application I should also mention that as of now the results of the races are not sorted by placements of the horses. This is a small but important thing which I couldn't get my hands on yet.
 
