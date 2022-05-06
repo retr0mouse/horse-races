@@ -93,7 +93,6 @@ export function CreateRacePage() {
                 ></HorseInputs>:null}
                 <SignOutButton/>
             </Container>:<LoginPage></LoginPage>}
-            
         </>
     );
 

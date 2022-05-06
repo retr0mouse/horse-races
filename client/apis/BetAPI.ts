@@ -8,7 +8,7 @@ export class BetAPI {
             throw new Error("You need to sign in first");
         }
         const player = await PlayerAPI.getByToken();
-        const balance = await PlayerAPI.getBalance(player.id);
+        const balance = await PlayerAPI.getBalance(player.id) - amount;
         if (balance > 0) {
             const data = {
                 playerId: player.id,
