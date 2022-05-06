@@ -2,8 +2,11 @@
 The basic application to create and run horse races, with the additional login capability and betting system, which awards players when they bet on the winning horse calculating the coefficient based on the information of other bets. 
 ## How to run locally:
 1. Copy the repository
-2. Create a PostgreSQL database
-3. Link the database in application.properties file, configuring the url with a port in "spring.datasource.url" field, the username in "spring.datasourse.usename" and the password in "spring.datasource.password" field.
+2. Create a **PostgreSQL** database
+3. Link the database in **application.properties** file, which is located in server folder. 
+4. Confugure the url with a port in **spring.datasource.url** field, the username in **spring.datasourse.username** and the password in **spring.datasource.password** field
+5. Run **npm install** in client folder
+6. Run **npm start** in client folder 
 
 An example of application.properties file, which is also present in this repository:
 <img width="736" alt="image" src="https://user-images.githubusercontent.com/22565000/167058703-20682f9d-b6bf-4a15-a185-b31a1f68b18c.png">
